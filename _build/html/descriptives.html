@@ -1,0 +1,568 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Descriptives &mdash; TURCOSA 1.0-1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="TURCOSA 1.0-1 documentation" href="index.html"/>
+        <link rel="next" title="Parametric Tests" href="parametric_tests.html"/>
+        <link rel="prev" title="Easy Use" href="easy_use.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> TURCOSA
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0-1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">TURCOSA - Manual Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file.html">File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_manipulation.html">Data Manipulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="easy_use.html">Easy Use</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Descriptives</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#descriptive-statistics">Descriptive Statistics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#how-to-select-this-module">How to select this module?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#general-aim">General aim</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#what-can-you-do-using-this-module">What can you do using this module?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#usage">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#frequencies">Frequencies</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">How to select this module?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">General aim</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">What can you do using this module?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#contingency-tables">Contingency Tables</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id5">How to select this module?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">General aim</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">What can you do using this module?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#normality-tests">Normality Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#outlier-detection">Outlier Detection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#correlation">Correlation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="parametric_tests.html">Parametric Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nonparametric_tests.html">Nonparametric Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="regression.html">Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multivariate_analysis.html">Multivariate Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="medical_statistics.html">Medical Statistics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graphs.html">Graphs</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">TURCOSA</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Descriptives</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/descriptives.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="descriptives">
+<h1>Descriptives<a class="headerlink" href="#descriptives" title="Permalink to this headline">¶</a></h1>
+<p>Descriptive panel is used to summarize a sample or a collection of data. It gives information about three different aspects of distribution of a single variable, including location (mean, trimmed mean, harmonic mean, geometric mean, median, quartiles, mode), scale (standard deviation, variance, standard error of mean, range) and shape (skewness, kurtosis).</p>
+<div class="section" id="descriptive-statistics">
+<h2>Descriptive Statistics<a class="headerlink" href="#descriptive-statistics" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="how-to-select-this-module">
+<h3>How to select this module?<a class="headerlink" href="#how-to-select-this-module" title="Permalink to this headline">¶</a></h3>
+<p>Descriptives - Descriptive Statistics</p>
+</div>
+<div class="section" id="general-aim">
+<h3>General aim<a class="headerlink" href="#general-aim" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Descriptive statistics is used to summarize a sample or a collection of data. It gives information about three different aspects of distribution of a single variable, including location (mean, trimmed mean, harmonic mean, geometric mean, median, quartiles, mode), scale (standard deviation, variance, standard error of mean, range) and shape (skewness, kurtosis).</li>
+</ul>
+</div>
+<div class="section" id="what-can-you-do-using-this-module">
+<h3>What can you do using this module?<a class="headerlink" href="#what-can-you-do-using-this-module" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Compute descriptive statistics, including location; mean, trimmed mean, harmonic mean, geometric mean, median, quartiles, mode, scale; standard deviation, variance, standard error of mean, range, shape measures; skewness, kurtosis and other summary measures; number, sum, minimum, maximum to describe the distribution of one or more numerical (continuous or discrete) variables</li>
+<li>Display the data distribution of variables with interactive plots, including box-plot and histogram.</li>
+<li>Test whether the data distributes normally or not using Shapiro-Wilk’s test.</li>
+</ul>
+</div>
+<div class="section" id="usage">
+<h3>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h3>
+<p>Step 1: Define your variables from &#8220;Variables&#8221; tab:</p>
+<ul class="simple">
+<li>Select numerical variable(s) of interest(s) for descriptive statistics.</li>
+<li>Select group variable(s) if necessary.</li>
+<li>Click Run button to execute the analysis.</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/variables.jpg"><img alt="descriptiveStatisticsVariables" src="_images/variables.jpg" style="width: 400px; height: 400px;" /></a>
+</div>
+<hr class="docutils" />
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You may choose more options using following tabs:</p>
+</div>
+<p>&#8220;Statistics&#8221; tab</p>
+<ul class="simple">
+<li>Select one or more availabe statistics.</li>
+<li>Check the box for Shapiro-Wilk&#8217;s normality test</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/statistics.jpg"><img alt="descriptiveStatisticsVariables" src="_images/statistics.jpg" style="width: 750px; height: 750px;" /></a>
+</div>
+<hr class="docutils" />
+<p>&#8220;Graphs&#8221; tab</p>
+<ul class="simple">
+<li>Select one or more availabe graphs: Histogram and Box Plot</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/graphs.jpg"><img alt="descriptiveStatisticsVariables" src="_images/graphs.jpg" style="width: 650px; height: 650px;" /></a>
+</div>
+<hr class="docutils" />
+<p>&#8220;Options&#8221; tab</p>
+<ul class="simple">
+<li>Calculate quartiles and percentiles.</li>
+<li>Manage missing values with either complete case or by variable deletion.</li>
+<li>Choose display option for grouping with either seperate or joint display.</li>
+<li>Add confidence interval.</li>
+<li>Set the trim value to trim your variable(s).</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/options.jpg"><img alt="descriptiveStatisticsVariables" src="_images/options.jpg" style="width: 650px; height: 650px;" /></a>
+</div>
+<hr class="docutils" />
+<p>Step 2: Get your desired outputs</p>
+<ul class="simple">
+<li>Display table with desired descriptive statistics.</li>
+<li>Switch between variables using combo-box button.</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/tableResults.jpg"><img alt="descriptiveStatisticsVariables" src="_images/tableResults.jpg" style="width: 650px; height: 650px;" /></a>
+</div>
+<hr class="docutils" />
+<ul class="simple">
+<li>Display Shapiro-Wilk&#8217;s Normality Test result.</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/testResults.jpg"><img alt="descriptiveStatisticsVariables" src="_images/testResults.jpg" style="width: 650px; height: 650px;" /></a>
+</div>
+<hr class="docutils" />
+<ul class="simple">
+<li>Display interactive plots:</li>
+<li>Box plot</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/boxplot.jpg"><img alt="descriptiveStatisticsVariables" src="_images/boxplot.jpg" style="width: 650px; height: 650px;" /></a>
+</div>
+<hr class="docutils" />
+<ul class="simple">
+<li>Histogram.</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/histogram.jpg"><img alt="descriptiveStatisticsVariables" src="_images/histogram.jpg" style="width: 650px; height: 650px;" /></a>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="frequencies">
+<h2>Frequencies<a class="headerlink" href="#frequencies" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h3>How to select this module?<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>Descriptives - Frequencies</p>
+</div>
+<div class="section" id="id2">
+<h3>General aim<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>The frequency is defined as the number of occurrence in the event of the interest. This measure can be calculated as count and percentage for categorical variables and introduced as frequency table.</li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h3>What can you do using this module?<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Compute several descriptive statistics to describe the distribution of categorical data.</li>
+<li>Display the data distribution with interactive plots, including bar and pie graphs.</li>
+<li>Test whether the distribution of data categories is equal or not.</li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h3>Usage<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>Step 1: Define your variables from &#8220;Variables&#8221; tab:</p>
+<ul class="simple">
+<li>Select row variable(s) and column variables.</li>
+<li>Select group variable(s) if necessary.</li>
+<li>Click Run button to execute the analysis.</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/variables1.jpg"><img alt="frequenciesVariables" src="_images/variables1.jpg" style="width: 400px; height: 400px;" /></a>
+</div>
+<hr class="docutils" />
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You may choose more options using following tabs:</p>
+</div>
+<p>&#8220;Statistics&#8221; tab</p>
+<ul class="simple">
+<li>Select one or more availabe statistics.</li>
+<li>Check the box for Shapiro-Wilk&#8217;s normality test</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/statistics1.jpg"><img alt="descriptiveStatisticsVariables" src="_images/statistics1.jpg" style="width: 750px; height: 750px;" /></a>
+</div>
+<hr class="docutils" />
+<p>&#8220;Graphs&#8221; tab</p>
+<ul class="simple">
+<li>Select the availabe graph: Bar Graph</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/graphs1.jpg"><img alt="descriptiveStatisticsVariables" src="_images/graphs1.jpg" style="width: 650px; height: 650px;" /></a>
+</div>
+<hr class="docutils" />
+<p>&#8220;Options&#8221; tab</p>
+<ul class="simple">
+<li>Calculate quartiles and percentiles.</li>
+<li>Manage missing values with either complete case or by variable deletion.</li>
+<li>Choose display option for grouping with either seperate or joint display.</li>
+<li>Add confidence interval.</li>
+<li>Set the trim value to trim your variable(s).</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/options1.jpg"><img alt="descriptiveStatisticsVariables" src="_images/options1.jpg" style="width: 650px; height: 650px;" /></a>
+</div>
+<hr class="docutils" />
+<p>Step 2: Get your desired outputs</p>
+<ul class="simple">
+<li>Display table with desired descriptive statistics.</li>
+<li>Switch between variables using combo-box button.</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/tableResults1.jpg"><img alt="descriptiveStatisticsVariables" src="_images/tableResults1.jpg" style="width: 650px; height: 650px;" /></a>
+</div>
+<hr class="docutils" />
+<ul class="simple">
+<li>Display Shapiro-Wilk&#8217;s Normality Test result.</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/testResults1.jpg"><img alt="descriptiveStatisticsVariables" src="_images/testResults1.jpg" style="width: 650px; height: 650px;" /></a>
+</div>
+<hr class="docutils" />
+<ul class="simple">
+<li>Display interactive plots:</li>
+<li>Box plot</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/barPlot.jpg"><img alt="descriptiveStatisticsVariables" src="_images/barPlot.jpg" style="width: 650px; height: 650px;" /></a>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="contingency-tables">
+<h2>Contingency Tables<a class="headerlink" href="#contingency-tables" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id5">
+<h3>How to select this module?<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>Descriptives - Contingency Tables</p>
+</div>
+<div class="section" id="id6">
+<h3>General aim<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>This module includes several categorical data analysis methods such as chi-square analysis, risk measures and Kappa tests. In this module, you can explore whether there is a significant relationship between two categorical variables. Moreover, you can display whether there is a significant relationship between categorical variables with interactive plots.</li>
+</ul>
+</div>
+<div class="section" id="id7">
+<h3>What can you do using this module?<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Compute several descriptive statistics to describe the distribution of categorical data.</li>
+<li>Display the data distribution with interactive plots, including bar and pie graphs.</li>
+<li>Test whether the distribution of data categories is equal or not.</li>
+</ul>
+</div>
+<div class="section" id="id8">
+<h3>Usage<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p>Step 1: Define your variables from &#8220;Variables&#8221; tab:</p>
+<ul class="simple">
+<li>Select row variable(s) and column variables.</li>
+<li>Select group variable(s) if necessary.</li>
+<li>Click Run button to execute the analysis.</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/variables2.jpg"><img alt="frequenciesVariables" src="_images/variables2.jpg" style="width: 400px; height: 400px;" /></a>
+</div>
+<hr class="docutils" />
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You may choose more options using following tabs:</p>
+</div>
+<p>&#8220;Statistics&#8221; tab</p>
+<ul class="simple">
+<li>Select one or more tests or association measures.</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/statistics2.jpg"><img alt="descriptiveStatisticsVariables" src="_images/statistics2.jpg" style="width: 750px; height: 750px;" /></a>
+</div>
+<hr class="docutils" />
+<p>&#8220;Graphs&#8221; tab</p>
+<ul class="simple">
+<li>Selet Bar Graph to draw a plot.</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/graphs2.jpg"><img alt="descriptiveStatisticsVariables" src="_images/graphs2.jpg" style="width: 650px; height: 650px;" /></a>
+</div>
+<hr class="docutils" />
+<p>&#8220;Options&#8221; tab</p>
+<ul class="simple">
+<li>Select options for Chi-square test: Continuity Correction, Exact chi-square.</li>
+<li>Display row, column or total percentages.</li>
+<li>Choose display option for grouping with either seperate or joint display.</li>
+<li>Select one or more table options to display expected values, raw residuals, pearson residuals, standardized residuals, adjusted residuals, and cell chisquare values.</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/options2.jpg"><img alt="descriptiveStatisticsVariables" src="_images/options2.jpg" style="width: 650px; height: 650px;" /></a>
+</div>
+<hr class="docutils" />
+<p>Step 2: Get your desired outputs</p>
+<ul class="simple">
+<li>Display desired cross tables.</li>
+<li>Switch between variables and table representations using combo-box button.</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/tableResults2.jpg"><img alt="descriptiveStatisticsVariables" src="_images/tableResults2.jpg" style="width: 650px; height: 650px;" /></a>
+</div>
+<hr class="docutils" />
+<ul class="simple">
+<li>Display desired test result table.</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/testResults2.jpg"><img alt="descriptiveStatisticsVariables" src="_images/testResults2.jpg" style="width: 650px; height: 650px;" /></a>
+</div>
+<hr class="docutils" />
+<ul class="simple">
+<li>Display interactive bar plot:</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/barPlot1.jpg"><img alt="descriptiveStatisticsVariables" src="_images/barPlot1.jpg" style="width: 650px; height: 650px;" /></a>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="normality-tests">
+<h2>Normality Tests<a class="headerlink" href="#normality-tests" title="Permalink to this headline">¶</a></h2>
+<p>There are some inherent limitations of Exordium, based on the assumptions
+that have been made during its development (and in my own music library).</p>
+<ul class="simple">
+<li>The artist name &#8220;Various&#8221; is reserved.  Tracks with an artist tag of
+&#8220;Various&#8221; will not be added to the library.</li>
+</ul>
+</div>
+<div class="section" id="outlier-detection">
+<h2>Outlier Detection<a class="headerlink" href="#outlier-detection" title="Permalink to this headline">¶</a></h2>
+<p>There are some inherent limitations of Exordium, based on the assumptions
+that have been made during its development (and in my own music library).</p>
+<ul class="simple">
+<li>The artist name &#8220;Various&#8221; is reserved.  Tracks with an artist tag of
+&#8220;Various&#8221; will not be added to the library.</li>
+</ul>
+</div>
+<div class="section" id="correlation">
+<h2>Correlation<a class="headerlink" href="#correlation" title="Permalink to this headline">¶</a></h2>
+<p>There are some inherent limitations of Exordium, based on the assumptions
+that have been made during its development (and in my own music library).</p>
+<ul class="simple">
+<li>The artist name &#8220;Various&#8221; is reserved.  Tracks with an artist tag of
+&#8220;Various&#8221; will not be added to the library.</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="parametric_tests.html" class="btn btn-neutral float-right" title="Parametric Tests" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="easy_use.html" class="btn btn-neutral" title="Easy Use" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, TURCOSA TEAM.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0-1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
