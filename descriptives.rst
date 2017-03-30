@@ -43,7 +43,7 @@ Step 1: Define your variables from "Variables" tab:
     :align: center
     :height: 400
     :width: 400
-    :alt: descriptiveStatisticsVariables
+    :alt: descriptiveStatisticsVariablesTab
 
 ---------------------------------
 
@@ -62,7 +62,7 @@ Step 1: Define your variables from "Variables" tab:
     :align: center
     :height: 750
     :width: 750
-    :alt: descriptiveStatisticsVariables
+    :alt: descriptiveStatisticsStatisticsTab
 
 ---------------------------------
 
@@ -77,7 +77,7 @@ Step 1: Define your variables from "Variables" tab:
     :align: center
     :height: 650
     :width: 650
-    :alt: descriptiveStatisticsVariables
+    :alt: descriptiveStatisticsGraphTab
 
 ---------------------------------
 
@@ -96,7 +96,7 @@ Step 1: Define your variables from "Variables" tab:
     :align: center
     :height: 650
     :width: 650
-    :alt: descriptiveStatisticsVariables
+    :alt: descriptiveOptionsTab
 
 ---------------------------------
 
@@ -112,7 +112,7 @@ Step 2: Get your desired outputs
     :align: center
     :height: 650
     :width: 650
-    :alt: descriptiveStatisticsVariables
+    :alt: descriptiveStatisticsTableResults
 
 ---------------------------------
 
@@ -125,7 +125,7 @@ Step 2: Get your desired outputs
     :align: center
     :height: 650
     :width: 650
-    :alt: descriptiveStatisticsVariables
+    :alt: descriptiveStatisticsTestResults
 
 ---------------------------------
 
@@ -139,7 +139,7 @@ Step 2: Get your desired outputs
     :align: center
     :height: 650
     :width: 650
-    :alt: descriptiveStatisticsVariables
+    :alt: descriptiveStatisticsBoxplot
 
 ----------------------------------
 
@@ -151,7 +151,7 @@ Step 2: Get your desired outputs
     :align: center
     :height: 650
     :width: 650
-    :alt: descriptiveStatisticsVariables
+    :alt: descriptiveStatisticsHistogram
 
 ----------------------------------
 
@@ -172,8 +172,8 @@ What can you do using this module?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 - Compute several descriptive statistics to describe the distribution of categorical data.
-- Display the data distribution with interactive plots, including bar and pie graphs.
 - Test whether the distribution of data categories is equal or not.
+- Display the data distribution with interactive plots, including bar and pie graphs.
 
 
 Usage
@@ -182,7 +182,7 @@ Usage
 Step 1: Define your variables from "Variables" tab:
 
 
-- Select row variable(s) and column variables.
+- Select categorical variable(s) of interest(s) for descriptive statistics.
 - Select group variable(s) if necessary.
 - Click Run button to execute the analysis.
 
@@ -193,7 +193,7 @@ Step 1: Define your variables from "Variables" tab:
     :align: center
     :height: 400
     :width: 400
-    :alt: frequenciesVariables
+    :alt: frequenciesVariablesTab
 
 ---------------------------------
 
@@ -204,7 +204,7 @@ Step 1: Define your variables from "Variables" tab:
 
 
 - Select one or more availabe statistics.
-- Check the box for Shapiro-Wilk's normality test
+- Check the box for Goodness of Fit (GoF) test for equality of proportions.
 
 ----------------------------------
 
@@ -212,14 +212,15 @@ Step 1: Define your variables from "Variables" tab:
     :align: center
     :height: 750
     :width: 750
-    :alt: descriptiveStatisticsVariables
+    :alt: frequenciesStatisticsTab
 
 ---------------------------------
 
 "Graphs" tab
 
 
-- Select the availabe graph: Bar Graph
+- Select the availabe graph: Bar Graph and Pie Graph
+- Graphs may be plotted based on counts or percentages.
 
 ----------------------------------
 
@@ -227,18 +228,15 @@ Step 1: Define your variables from "Variables" tab:
     :align: center
     :height: 650
     :width: 650
-    :alt: descriptiveStatisticsVariables
+    :alt: frequenciesGraphsTab
 
 ---------------------------------
 
 "Options" tab
 
 
-- Calculate quartiles and percentiles.
-- Manage missing values with either complete case or by variable deletion.
-- Choose display option for grouping with either seperate or joint display.
-- Add confidence interval.
-- Set the trim value to trim your variable(s).
+- Change the alpha level, default is 0.05.
+- Check the box if you want to display frequency tables separately for each variable.
 
 ----------------------------------
 
@@ -246,7 +244,7 @@ Step 1: Define your variables from "Variables" tab:
     :align: center
     :height: 650
     :width: 650
-    :alt: descriptiveStatisticsVariables
+    :alt: frequenciesOptionsTab
 
 ---------------------------------
 
@@ -262,12 +260,12 @@ Step 2: Get your desired outputs
     :align: center
     :height: 650
     :width: 650
-    :alt: descriptiveStatisticsVariables
+    :alt: frequenciesTableResults
 
 ---------------------------------
 
 
-- Display Shapiro-Wilk's Normality Test result.
+- Display Goodness of Fit test or equality of proportions.
 
 ----------------------------------
 
@@ -275,7 +273,7 @@ Step 2: Get your desired outputs
     :align: center
     :height: 650
     :width: 650
-    :alt: descriptiveStatisticsVariables
+    :alt: frequenciesTestResults
 
 ---------------------------------
 
@@ -289,7 +287,13 @@ Step 2: Get your desired outputs
     :align: center
     :height: 650
     :width: 650
-    :alt: descriptiveStatisticsVariables
+    :alt: frequenciesBarPlot
+
+.. figure:: images/help_img/frequencies/piePlot.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: dfrequenciesPiePlot
 
 ----------------------------------
 
@@ -312,8 +316,8 @@ What can you do using this module?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 - Compute several descriptive statistics to describe the distribution of categorical data.
-- Display the data distribution with interactive plots, including bar and pie graphs.
 - Test whether the distribution of data categories is equal or not.
+- Display the data distribution with interactive plots, including bar and pie graphs.
 
 
 Usage
@@ -333,7 +337,7 @@ Step 1: Define your variables from "Variables" tab:
     :align: center
     :height: 400
     :width: 400
-    :alt: frequenciesVariables
+    :alt: contingencyTablesVariables
 
 ---------------------------------
 
@@ -351,7 +355,7 @@ Step 1: Define your variables from "Variables" tab:
     :align: center
     :height: 750
     :width: 750
-    :alt: descriptiveStatisticsVariables
+    :alt: contingencyTablesStatistics
 
 ---------------------------------
 
@@ -366,7 +370,7 @@ Step 1: Define your variables from "Variables" tab:
     :align: center
     :height: 650
     :width: 650
-    :alt: descriptiveStatisticsVariables
+    :alt: contingencyTablesGraphs
 
 ---------------------------------
 
@@ -384,7 +388,7 @@ Step 1: Define your variables from "Variables" tab:
     :align: center
     :height: 650
     :width: 650
-    :alt: descriptiveStatisticsVariables
+    :alt: contingencyTablesOptions
 
 ---------------------------------
 
@@ -400,7 +404,7 @@ Step 2: Get your desired outputs
     :align: center
     :height: 650
     :width: 650
-    :alt: descriptiveStatisticsVariables
+    :alt: contingencyTablesTableResults
 
 ---------------------------------
 
@@ -413,7 +417,7 @@ Step 2: Get your desired outputs
     :align: center
     :height: 650
     :width: 650
-    :alt: descriptiveStatisticsVariables
+    :alt: contingencyTestResults
 
 ---------------------------------
 
@@ -425,29 +429,285 @@ Step 2: Get your desired outputs
     :align: center
     :height: 650
     :width: 650
-    :alt: descriptiveStatisticsVariables
+    :alt: contingencyBarPlot
 
 ----------------------------------
 
 
+
 Normality Tests
----------------
+------------------
 
-There are some inherent limitations of Exordium, based on the assumptions
-that have been made during its development (and in my own music library).
+How to select this module?
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-- The artist name "Various" is reserved.  Tracks with an artist tag of
-  "Various" will not be added to the library.
+Descriptives - Normality Tests
+
+General aim
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- This module includes descriptive statistics, normality tests and graphical approaches for assessing univariate normality of a continuous variable. A Box-Cox transformation can be performed for non-normally distributed variables and normality can be checked after transformation. 
+
+What can you do using this module?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Compute several descriptive statistics (mean, median, first quartile, third quartile, skewness, kurtosis) to describe the distribution of a continuous variable.
+- Perform hypothesis tests (Shapiro-Wilk, Anderson-Darling, Kolmogorov-Smirnov, Shapiro-Francia, Cramer-von-Mises, Lilliefors) for univariate normality of a continuous variable.
+- Display the data distribution with interactive plots, including qq plot, box plot and histogram.
+
+
+Usage
+~~~~~~
+
+Step 1: Define your variables from "Variables" tab:
+
+
+- Select continuous variable(s) you wish to assess univariate normality.
+- Select group variable(s) if necessary.
+- Click Run button to execute the analysis.
+
+
+----------------------------------
+
+.. figure:: images/help_img/normalityTests/variables.jpg
+    :align: center
+    :height: 400
+    :width: 400
+    :alt: normalityTestsTablesVariables
+
+---------------------------------
+
+
+.. note:: You may choose more options using following tabs:
+
+"Statistics" tab
+
+
+- Select one or more univariate normality tests.
+
+----------------------------------
+
+.. figure:: images/help_img/normalityTests/statistics.jpg
+    :align: center
+    :height: 750
+    :width: 750
+    :alt: normalityTestsTablesStatistics
+
+---------------------------------
+
+"Graphs" tab
+
+
+- Selet one or more interactive graphs: QQ plot, Box plot, Histogram. 
+
+----------------------------------
+
+.. figure:: images/help_img/normalityTests/graphs.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: normalityTestsTablesGraphs
+
+---------------------------------
+
+"Options" tab
+
+
+- Change the alpha level, default is 0.05.
+- Check the box if you wish to perform a Box-Cox transformation.
+
+----------------------------------
+
+.. figure:: images/help_img/normalityTests/options.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: normalityTestsTablesOptions
+
+---------------------------------
+
+
+Step 2: Get your desired outputs
+
+- Display descriptive statistics
+- Switch between variables and table representations using combo-box button.
+
+----------------------------------
+
+.. figure:: images/help_img/normalityTests/tableResults.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: normalityTestsTableResults
+
+---------------------------------
+
+
+- Display desired test result table. 
+
+----------------------------------
+
+.. figure:: images/help_img/normalityTests/testResults.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: normalityTestsTestResults
+
+---------------------------------
+
+- Display interactive QQ plot:
+
+----------------------------------
+
+.. figure:: images/help_img/normalityTests/qqPlot.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: normalityTestsQQPlot
+
+----------------------------------
+
 
 
 Outlier Detection
------------------
+------------------
 
-There are some inherent limitations of Exordium, based on the assumptions
-that have been made during its development (and in my own music library).
+How to select this module?
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-- The artist name "Various" is reserved.  Tracks with an artist tag of
-  "Various" will not be added to the library.
+Descriptives - Outlier Detection
+
+General aim
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- This module includes several statistical methods for detection of outliers in continuous variables.
+
+What can you do using this module?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Compute descriptive statistics, including mean, standard deviation, standard error of mean, lower and upper limits.
+- Perform normality test (Shapiro-Wilk) and outlier detection tests (Z-score method, quantile method, Grubb's test, Generalized ESD test).
+- Display the data distribution with interactive box-plots.
+
+
+Usage
+~~~~~~
+
+Step 1: Define your variables from "Variables" tab:
+
+
+- Select continuous variable(s) you wish to assess univariate normality.
+- Select group variable(s) if necessary.
+- Click Run button to execute the analysis.
+
+
+----------------------------------
+
+.. figure:: images/help_img/outlierDetection/variables.jpg
+    :align: center
+    :height: 400
+    :width: 400
+    :alt: normalityTestsTablesVariables
+
+---------------------------------
+
+
+.. note:: You may choose more options using following tabs:
+
+"Statistics" tab
+
+
+- Select one or more univariate normality tests.
+
+----------------------------------
+
+.. figure:: images/help_img/outlierDetection/statistics.jpg
+    :align: center
+    :height: 750
+    :width: 750
+    :alt: normalityTestsTablesStatistics
+
+---------------------------------
+
+"Graphs" tab
+
+
+- Selet one or more interactive graphs: QQ plot, Box plot, Histogram. 
+
+----------------------------------
+
+.. figure:: images/help_img/outlierDetection/graphs.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: normalityTestsTablesGraphs
+
+---------------------------------
+
+"Options" tab
+
+
+- Change the alpha level, default is 0.05.
+- Check the box if you wish to perform a Box-Cox transformation.
+
+----------------------------------
+
+.. figure:: images/help_img/outlierDetection/options.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: normalityTestsTablesOptions
+
+---------------------------------
+
+
+Step 2: Get your desired outputs
+
+- Display descriptive statistics
+- Switch between variables and table representations using combo-box button.
+
+----------------------------------
+
+.. figure:: images/help_img/outlierDetection/tableResults.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: normalityTestsTableResults
+
+---------------------------------
+
+
+- Display normality test and outlier results. 
+
+----------------------------------
+
+.. figure:: images/help_img/outlierDetection/testResultsNormality.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: normalityTestsTestResults
+
+    
+.. figure:: images/help_img/outlierDetection/testResultsOutlier.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: normalityTestsTestResults
+
+---------------------------------
+
+- Display interactive box plot:
+
+----------------------------------
+
+.. figure:: images/help_img/outlierDetection/boxPlot.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: normalityTestsQQPlot
+
+----------------------------------
+
 
 
 Correlation
