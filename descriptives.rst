@@ -11,7 +11,14 @@ Descriptive Statistics
 How to select this module?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Descriptives - Descriptive Statistics  
+Descriptives 
+
+.. figure:: images/help_img/step.png
+    :align: left
+    :height: 40
+    :width: 40
+
+Descriptive Statistics  
 
 General aim
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -39,7 +46,7 @@ Step 1: Define your variables from "Variables" tab:
 
 ----------------------------------
 
-.. figure:: images/help_img/descriptiveStatistics/variables.jpg
+.. figure:: images/help_img/descriptives/descriptiveStatistics/variables.jpg
     :align: center
     :height: 400
     :width: 400
@@ -58,7 +65,7 @@ Step 1: Define your variables from "Variables" tab:
 
 ----------------------------------
 
-.. figure:: images/help_img/descriptiveStatistics/statistics.jpg
+.. figure:: images/help_img/descriptives/descriptiveStatistics/statistics.jpg
     :align: center
     :height: 750
     :width: 750
@@ -73,7 +80,7 @@ Step 1: Define your variables from "Variables" tab:
 
 ----------------------------------
 
-.. figure:: images/help_img/descriptiveStatistics/graphs.jpg
+.. figure:: images/help_img/descriptives/descriptiveStatistics/graphs.jpg
     :align: center
     :height: 650
     :width: 650
@@ -92,7 +99,7 @@ Step 1: Define your variables from "Variables" tab:
 
 ----------------------------------
 
-.. figure:: images/help_img/descriptiveStatistics/options.jpg
+.. figure:: images/help_img/descriptives/descriptiveStatistics/options.jpg
     :align: center
     :height: 650
     :width: 650
@@ -108,7 +115,7 @@ Step 2: Get your desired outputs
 
 ----------------------------------
 
-.. figure:: images/help_img/descriptiveStatistics/tableResults.jpg
+.. figure:: images/help_img/descriptives/descriptiveStatistics/tableResults.jpg
     :align: center
     :height: 650
     :width: 650
@@ -121,7 +128,7 @@ Step 2: Get your desired outputs
 
 ----------------------------------
 
-.. figure:: images/help_img/descriptiveStatistics/testResults.jpg
+.. figure:: images/help_img/descriptives/descriptiveStatistics/testResults.jpg
     :align: center
     :height: 650
     :width: 650
@@ -135,7 +142,7 @@ Step 2: Get your desired outputs
 
 ----------------------------------
 
-.. figure:: images/help_img/descriptiveStatistics/boxplot.jpg
+.. figure:: images/help_img/descriptives/descriptiveStatistics/boxplot.jpg
     :align: center
     :height: 650
     :width: 650
@@ -147,7 +154,7 @@ Step 2: Get your desired outputs
 
 ----------------------------------
 
-.. figure:: images/help_img/descriptiveStatistics/histogram.jpg
+.. figure:: images/help_img/descriptives/descriptiveStatistics/histogram.jpg
     :align: center
     :height: 650
     :width: 650
@@ -155,13 +162,22 @@ Step 2: Get your desired outputs
 
 ----------------------------------
 
+
+
 Frequencies
 -----------
 
 How to select this module?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Descriptives - Frequencies
+Descriptives 
+
+.. figure:: images/help_img/step.png
+    :align: left
+    :height: 40
+    :width: 40
+
+Frequencies
 
 General aim
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -189,7 +205,7 @@ Step 1: Define your variables from "Variables" tab:
 
 ----------------------------------
 
-.. figure:: images/help_img/frequencies/variables.jpg
+.. figure:: images/help_img/descriptives/frequencies/variables.jpg
     :align: center
     :height: 400
     :width: 400
@@ -208,7 +224,7 @@ Step 1: Define your variables from "Variables" tab:
 
 ----------------------------------
 
-.. figure:: images/help_img/frequencies/statistics.jpg
+.. figure:: images/help_img/descriptives/frequencies/statistics.jpg
     :align: center
     :height: 750
     :width: 750
@@ -224,7 +240,7 @@ Step 1: Define your variables from "Variables" tab:
 
 ----------------------------------
 
-.. figure:: images/help_img/frequencies/graphs.jpg
+.. figure:: images/help_img/descriptives/frequencies/graphs.jpg
     :align: center
     :height: 650
     :width: 650
@@ -240,7 +256,7 @@ Step 1: Define your variables from "Variables" tab:
 
 ----------------------------------
 
-.. figure:: images/help_img/frequencies/options.jpg
+.. figure:: images/help_img/descriptives/frequencies/options.jpg
     :align: center
     :height: 650
     :width: 650
@@ -256,7 +272,7 @@ Step 2: Get your desired outputs
 
 ----------------------------------
 
-.. figure:: images/help_img/frequencies/tableResults.jpg
+.. figure:: images/help_img/descriptives/frequencies/tableResults.jpg
     :align: center
     :height: 650
     :width: 650
@@ -269,7 +285,7 @@ Step 2: Get your desired outputs
 
 ----------------------------------
 
-.. figure:: images/help_img/frequencies/testResults.jpg
+.. figure:: images/help_img/descriptives/frequencies/testResults.jpg
     :align: center
     :height: 650
     :width: 650
@@ -278,18 +294,23 @@ Step 2: Get your desired outputs
 ---------------------------------
 
 - Display interactive plots:
-
-- Box plot
+- Bar plot
 
 ----------------------------------
 
-.. figure:: images/help_img/frequencies/barPlot.jpg
+.. figure:: images/help_img/descriptives/frequencies/barPlot.jpg
     :align: center
     :height: 650
     :width: 650
     :alt: frequenciesBarPlot
 
-.. figure:: images/help_img/frequencies/piePlot.jpg
+---------------------------------
+
+- Pie plot
+
+----------------------------------
+
+.. figure:: images/help_img/descriptives/frequencies/piePlot.jpg
     :align: center
     :height: 650
     :width: 650
@@ -305,7 +326,14 @@ Contingency Tables
 How to select this module?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Descriptives - Contingency Tables
+Descriptives 
+
+.. figure:: images/help_img/step.png
+    :align: left
+    :height: 40
+    :width: 40
+
+Contingency Tables
 
 General aim
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -333,7 +361,7 @@ Step 1: Define your variables from "Variables" tab:
 
 ----------------------------------
 
-.. figure:: images/help_img/contingencyTables/variables.jpg
+.. figure:: images/help_img/descriptives/contingencyTables/variables.jpg
     :align: center
     :height: 400
     :width: 400
@@ -351,7 +379,7 @@ Step 1: Define your variables from "Variables" tab:
 
 ----------------------------------
 
-.. figure:: images/help_img/contingencyTables/statistics.jpg
+.. figure:: images/help_img/descriptives/contingencyTables/statistics.jpg
     :align: center
     :height: 750
     :width: 750
@@ -366,7 +394,7 @@ Step 1: Define your variables from "Variables" tab:
 
 ----------------------------------
 
-.. figure:: images/help_img/contingencyTables/graphs.jpg
+.. figure:: images/help_img/descriptives/contingencyTables/graphs.jpg
     :align: center
     :height: 650
     :width: 650
@@ -384,7 +412,7 @@ Step 1: Define your variables from "Variables" tab:
 
 ----------------------------------
 
-.. figure:: images/help_img/contingencyTables/options.jpg
+.. figure:: images/help_img/descriptives/contingencyTables/options.jpg
     :align: center
     :height: 650
     :width: 650
@@ -400,7 +428,7 @@ Step 2: Get your desired outputs
 
 ----------------------------------
 
-.. figure:: images/help_img/contingencyTables/tableResults.jpg
+.. figure:: images/help_img/descriptives/contingencyTables/tableResults.jpg
     :align: center
     :height: 650
     :width: 650
@@ -413,7 +441,7 @@ Step 2: Get your desired outputs
 
 ----------------------------------
 
-.. figure:: images/help_img/contingencyTables/testResults.jpg
+.. figure:: images/help_img/descriptives/contingencyTables/testResults.jpg
     :align: center
     :height: 650
     :width: 650
@@ -425,7 +453,7 @@ Step 2: Get your desired outputs
 
 ----------------------------------
 
-.. figure:: images/help_img/contingencyTables/barPlot.jpg
+.. figure:: images/help_img/descriptives/contingencyTables/barPlot.jpg
     :align: center
     :height: 650
     :width: 650
@@ -441,7 +469,14 @@ Normality Tests
 How to select this module?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Descriptives - Normality Tests
+Descriptives 
+
+.. figure:: images/help_img/step.png
+    :align: left
+    :height: 40
+    :width: 40
+
+Normality Tests
 
 General aim
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -469,11 +504,11 @@ Step 1: Define your variables from "Variables" tab:
 
 ----------------------------------
 
-.. figure:: images/help_img/normalityTests/variables.jpg
+.. figure:: images/help_img/descriptives/normalityTests/variables.jpg
     :align: center
     :height: 400
     :width: 400
-    :alt: normalityTestsTablesVariables
+    :alt: normalityTestsVariables
 
 ---------------------------------
 
@@ -487,11 +522,11 @@ Step 1: Define your variables from "Variables" tab:
 
 ----------------------------------
 
-.. figure:: images/help_img/normalityTests/statistics.jpg
+.. figure:: images/help_img/descriptives/normalityTests/statistics.jpg
     :align: center
     :height: 750
     :width: 750
-    :alt: normalityTestsTablesStatistics
+    :alt: normalityTestsStatistics
 
 ---------------------------------
 
@@ -502,11 +537,11 @@ Step 1: Define your variables from "Variables" tab:
 
 ----------------------------------
 
-.. figure:: images/help_img/normalityTests/graphs.jpg
+.. figure:: images/help_img/descriptives/normalityTests/graphs.jpg
     :align: center
     :height: 650
     :width: 650
-    :alt: normalityTestsTablesGraphs
+    :alt: normalityTestsGraphs
 
 ---------------------------------
 
@@ -518,11 +553,11 @@ Step 1: Define your variables from "Variables" tab:
 
 ----------------------------------
 
-.. figure:: images/help_img/normalityTests/options.jpg
+.. figure:: images/help_img/descriptives/normalityTests/options.jpg
     :align: center
     :height: 650
     :width: 650
-    :alt: normalityTestsTablesOptions
+    :alt: normalityTestsOptions
 
 ---------------------------------
 
@@ -534,7 +569,7 @@ Step 2: Get your desired outputs
 
 ----------------------------------
 
-.. figure:: images/help_img/normalityTests/tableResults.jpg
+.. figure:: images/help_img/descriptives/normalityTests/tableResults.jpg
     :align: center
     :height: 650
     :width: 650
@@ -547,7 +582,7 @@ Step 2: Get your desired outputs
 
 ----------------------------------
 
-.. figure:: images/help_img/normalityTests/testResults.jpg
+.. figure:: images/help_img/descriptives/normalityTests/testResults.jpg
     :align: center
     :height: 650
     :width: 650
@@ -559,7 +594,7 @@ Step 2: Get your desired outputs
 
 ----------------------------------
 
-.. figure:: images/help_img/normalityTests/qqPlot.jpg
+.. figure:: images/help_img/descriptives/normalityTests/qqPlot.jpg
     :align: center
     :height: 650
     :width: 650
@@ -575,7 +610,14 @@ Outlier Detection
 How to select this module?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Descriptives - Outlier Detection
+Descriptives 
+
+.. figure:: images/help_img/step.png
+    :align: left
+    :height: 40
+    :width: 40
+
+Outlier Detection
 
 General aim
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -603,11 +645,11 @@ Step 1: Define your variables from "Variables" tab:
 
 ----------------------------------
 
-.. figure:: images/help_img/outlierDetection/variables.jpg
+.. figure:: images/help_img/descriptives/outlierDetection/variables.jpg
     :align: center
     :height: 400
     :width: 400
-    :alt: normalityTestsTablesVariables
+    :alt: outlierDetectionVariables
 
 ---------------------------------
 
@@ -621,11 +663,11 @@ Step 1: Define your variables from "Variables" tab:
 
 ----------------------------------
 
-.. figure:: images/help_img/outlierDetection/statistics.jpg
+.. figure:: images/help_img/descriptives/outlierDetection/statistics.jpg
     :align: center
     :height: 750
     :width: 750
-    :alt: normalityTestsTablesStatistics
+    :alt: outlierDetectionStatistics
 
 ---------------------------------
 
@@ -636,11 +678,11 @@ Step 1: Define your variables from "Variables" tab:
 
 ----------------------------------
 
-.. figure:: images/help_img/outlierDetection/graphs.jpg
+.. figure:: images/help_img/descriptives/outlierDetection/graphs.jpg
     :align: center
     :height: 650
     :width: 650
-    :alt: normalityTestsTablesGraphs
+    :alt: outlierDetectionGraphs
 
 ---------------------------------
 
@@ -652,11 +694,11 @@ Step 1: Define your variables from "Variables" tab:
 
 ----------------------------------
 
-.. figure:: images/help_img/outlierDetection/options.jpg
+.. figure:: images/help_img/descriptives/outlierDetection/options.jpg
     :align: center
     :height: 650
     :width: 650
-    :alt: normalityTestsTablesOptions
+    :alt: outlierDetectionOptions
 
 ---------------------------------
 
@@ -668,11 +710,11 @@ Step 2: Get your desired outputs
 
 ----------------------------------
 
-.. figure:: images/help_img/outlierDetection/tableResults.jpg
+.. figure:: images/help_img/descriptives/outlierDetection/tableResults.jpg
     :align: center
     :height: 650
     :width: 650
-    :alt: normalityTestsTableResults
+    :alt: outlierDetectionResults
 
 ---------------------------------
 
@@ -681,18 +723,18 @@ Step 2: Get your desired outputs
 
 ----------------------------------
 
-.. figure:: images/help_img/outlierDetection/testResultsNormality.jpg
+.. figure:: images/help_img/descriptives/outlierDetection/testResultsNormality.jpg
     :align: center
     :height: 650
     :width: 650
     :alt: normalityTestsTestResults
 
-    
-.. figure:: images/help_img/outlierDetection/testResultsOutlier.jpg
+
+.. figure:: images/help_img/descriptives/outlierDetection/testResultsOutlier.jpg
     :align: center
     :height: 650
     :width: 650
-    :alt: normalityTestsTestResults
+    :alt: outlierDetectionResults
 
 ---------------------------------
 
@@ -700,11 +742,11 @@ Step 2: Get your desired outputs
 
 ----------------------------------
 
-.. figure:: images/help_img/outlierDetection/boxPlot.jpg
+.. figure:: images/help_img/descriptives/outlierDetection/boxPlot.jpg
     :align: center
     :height: 650
     :width: 650
-    :alt: normalityTestsQQPlot
+    :alt: noutlierDetectionBoxPlot
 
 ----------------------------------
 
@@ -713,9 +755,142 @@ Step 2: Get your desired outputs
 Correlation
 -----------
 
-There are some inherent limitations of Exordium, based on the assumptions
-that have been made during its development (and in my own music library).
+How to select this module?
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-- The artist name "Various" is reserved.  Tracks with an artist tag of
-  "Various" will not be added to the library.
+Descriptives 
+
+.. figure:: images/help_img/step.png
+    :align: left
+    :height: 40
+    :width: 40
+
+Correlation
+
+General aim
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- This module includes several statistical methods for exploring correlations between variables. 
+
+What can you do using this module?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Perform correlation analysis using Pearson product moment, Spearman's rho or Kendall's tau b.
+- Compute descriptive statistics, pairwise correlations and covariances.
+- Perform normality test (Shapiro-Wilk).
+- Plot interactive scatter plots.
+
+
+Usage
+~~~~~~
+
+Step 1: Define your variables from "Variables" tab:
+
+
+- Select variables you wish to perform correlation analysis.
+- Select covariate variable(s) if necessary.
+- Enter a test value, default is 0.
+- Click Run button to execute the analysis.
+
+
+----------------------------------
+
+.. figure:: images/help_img/descriptives/correlation/variables.jpg
+    :align: center
+    :height: 400
+    :width: 400
+    :alt: outlierDetectionVariables
+
+---------------------------------
+
+
+.. note:: You may choose more options using following tabs:
+
+"Statistics" tab
+
+
+- Select one or more univariate normality tests.
+
+----------------------------------
+
+.. figure:: images/help_img/descriptives/correlation/statistics.jpg
+    :align: center
+    :height: 750
+    :width: 750
+    :alt: outlierDetectionStatistics
+
+---------------------------------
+
+"Graphs" tab
+
+
+- Selet one or more interactive graphs: QQ plot, Box plot, Histogram. 
+
+----------------------------------
+
+.. figure:: images/help_img/descriptives/correlation/graphs.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: outlierDetectionGraphs
+
+---------------------------------
+
+"Options" tab
+
+
+- Change the alpha level, default is 0.05.
+- Check the box if you wish to perform a Box-Cox transformation.
+
+----------------------------------
+
+.. figure:: images/help_img/descriptives/correlation/options.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: outlierDetectionOptions
+
+---------------------------------
+
+
+Step 2: Get your desired outputs
+
+- Display descriptive statistics
+- Switch between variables and table representations using combo-box button.
+
+----------------------------------
+
+.. figure:: images/help_img/descriptives/correlation/tableResults.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: outlierDetectionResults
+
+---------------------------------
+
+
+- Display normality test and outlier results. 
+
+----------------------------------
+
+.. figure:: images/help_img/descriptives/correlation/testResults.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: outlierDetectionTestResults
+
+---------------------------------
+
+- Display interactive box plot:
+
+----------------------------------
+
+.. figure:: images/help_img/descriptives/correlation/scatterPlot.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: outlierDetectionScatterPlot
+
+----------------------------------
+
 

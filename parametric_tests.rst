@@ -3,169 +3,1645 @@
 Parametric Tests
 ===========================
 
-As mentioned on the main page, Exordium does not really attempt to be
-a general-purpose web music library suitable for widespread use.  The
-only configuration options currently available are those necessary for
-basic operation.  Exordium was born out of my persistent
-dissatisfaction with existing web music library applications.  I've
-been using various library applications over the years but have always
-ended up maintaining my own patchsets to alter their behavior to suit
-what I like, and in the end I figured it would be more rewarding to
-just write my own.
+‘Parametric Tests’ panel is used to estimate the population parameters (e.g. mean, variance and proportion) and compare them between groups, time points or user-specified custom values, when the parametric assumptions are met. Required test assumptions (e.g. data normality, variance homogeneity) are also available in each module, to assist the users on their decision to perform (or not perform) the right test module.
 
-So, Exordium represents essentially my own personal ideal of a web
-music library application, and its design decisions and operational
-goals reflect a very specific set of requirements: my own.  If your
-ideal music library differs from my own in even moderate ways, other
-music library apps are much more likely to be to your liking.
 
-I would, of course, be happy to accept patches which add, extend, or
-modify Exordium behavior, so long as the current functionality remains
-the default.  I certainly don't actually *expect* any patches, of course,
-given that Exordium's target market is exactly one individual.
+One Proportion Test
+-------------------
 
-Assumptions
------------
+How to select this module?
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-- Except for the Javascript necessary to hook into jPlayer, and jPlayer
-  itself, there is no client-side Javascript or AJAX-style dynamic page
-  content.  All HTML is generated server-side.  The application is
-  quite usable from text-based browsers.
+Parametric Tests 
 
-- Music files must be accessible via the local filesystem on which Django
-  is running, and stored as either mp3, ogg vorbis, or m4a (mp4a).
+.. figure:: images/help_img/step.png
+    :align: left
+    :height: 40
+    :width: 40
 
-- The entire music library must be available from a single directory
-  prefix.  If subdirs of this root dir span multiple volumes (or network
-  mounts), that's fine, but there is NO support for multiple libraries in
-  Exordium.
+One Proportion Test
 
-- Exordium itself will never attempt to write to your library directory for
-  any reason - all music files (and album art) are managed outside of
-  this app.  Write access to a directory on the filesystem is required
-  for zipfile downloads, but that directory need not be in your music
-  library.
+General aim
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-- Music files should be, in general, arranged scrupulously: All files
-  within a single directory belong to the same album, and an album should
-  never span multiple directories.  There's actually plenty of wiggle room
-  here, and Exordium should correctly deal with directories full of
-  "miscellaneous" files, etc, but in general the library should be
-  well-ordered and have albums contained in their own directories.  This
-  is less important during the initial library import, but becomes much
-  more important when updating tags or rearranging your filesystem layout,
-  as Exordium uses the directory structure to help determine what kind of
-  changes have been made.
+- This module can be used to estimate the proportion of the population and compare whether it differs from a specified reference value.
 
-  - Directory containment is the primary method through which Various Artists
-    albums are collated.  A group of files in the same directory with different
-    artists but the same album name will be sorted into a single "Various"
-    album containing all those tracks.  Conversely, if an album name is shared
-    by tracks from different directories (each dir's files with a different
-    artist name), multiple albums will be created.
+What can you do using this module?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-  - Tracks without an album tag will be sorted into a "virtual" album entitled
-    "Non-Album Tracks: Band Name" - this is the one case where it's expected that
-    this virtual "album" might span multiple directories.
- 
-- The artwork for albums should be contained in gif/jpg/png files stored
-  alongside the mp3s/oggs/m4as, or in the immediate parent folder (in the case
-  of multi-disc albums, for instance).  Filenames which start with "cover"
-  will be preferred over other graphics in the directory.  PNGs will be
-  preferred over JPGs, and JPGs will be preferred over GIFs.
+- Compute several descriptive statistics to describe the distribution of categorical data and estimate the proportion of the population.
+- Compare the estimated proportion with a specified reference value.
+- Use asymptotic or exact test procedures in computation of p values.
+- Display the data distribution of variables with interactive bar plots either for counts or percentages.
 
-  - Artwork thumbnails will be stored directly in Django's database, in
-    blatant disregard for Django best practices.  IMO the benefits far
-    outweigh the performance concerns, given the scale of data involved.
 
-- Music files should be available directly via HTTP/HTTPS, using the same
-  directory structure as the library.  This does not have to be on the same
-  port or even server as Django, but the direct download and streaming
-  functionality rely on having a direct URL to the files.
+Usage
+~~~~~~
 
-- Album zipfile downloads, similarly, require that the zipfile directory be
-  accessible directly over the web.  As with the music files, this does not
-  need to be on the same port or even server as Django, but Django will not
-  serve the zipfile itself.  The reason for this is that I want to be able
-  to pass the zipfile URL to other apps for downloading, and for downloads
-  to be easily resumable in the event they're accidentally cancelled before
-  they're finished.  The text on the download page mentions that zipfiles
-  are kept for around 48 hours, but that cleanup is actually not a function
-  of Exordium itself.  Instead, I just have a cronjob set on the box like so::
+Step 1: Define your variables from "Variables" tab:
 
-    0 2 * * * /usr/bin/find /var/audio/exordiumzips -type f -name "*.zip" -mtime +2 -print -exec unzip -v {} \; -exec rm {} \;
 
-- Tags for information commonly associated with classical music are
-  supported, namely: Group/Ensemble, Conductor, and Composer.  *(For ID3
-  tags: TPE2, TPE3, and TCOM, respectively.  In Ogg Vorbis, the more
-  sensible ENSEMBLE, CONDUCTOR, and COMPOSER.)*  Albums will still be
-  defined by their main Artist/Album association, and Artist is
-  always a required field, whereas Group/Conductor/Composer are all
-  optional.  Internally, these are all stored as "artists," so when
-  browsing by artist, Exordium should do the right thing and show you
-  all albums containing an artist, whether they showed up as artist,
-  composer, conductor, or ensemble.
+- Select categorical variable(s) of interest(s) for descriptive statistics and comparison
+- Enter the test proportion (the proportion to be compared)
+- Use “Sample Input” if you will enter the necessary values of summarised data instead of using the entire data
+- Click Run button to execute the analysis.
 
-- There are many live concert recordings in my personal library, which I've
-  uniformly tagged with an album name starting with "YYYY.MM.DD - Live".
-  Given the volume of these albums, Exordium will automatically consider any
-  album matching that name as a "live" album.  *(Dashes and underscores are
-  also acceptable inbetween the date components.)*  By default, Exordium
-  will hide those live albums from its display, since they otherwise often
-  get in the way.  A checkbox is available in the lefthand column to turn
-  on live album display, though, and it can be toggled at any time.
 
-- The "addition date" of albums into the library is an important data point;
-  Exordium's main view is the twenty most recently-added albums.  To that
-  point, updates of the music files will allow the album records to be
-  updated while keeping the addition time intact.  Some specific cases in
-  which this is ensured:
+----------------------------------
 
-  - Updating album/artist names in the file's tags
-  - Moving music files from one directory to another, or renaming the files
+.. figure:: images/help_img/parametricTests/oneProportion/variables.jpg
+    :align: center
+    :height: 400
+    :width: 400
+    :alt: oneProportionVariables
 
-  Combining the two may, however, result in the album being deleted from
-  the library and then re-added.  If the tags on a collection of files are
-  updated (so that the file's checksum changes), **and** the files are
-  moved into a separate directory, the album will end up being re-added,
-  since there's no reasonable way to associate the updated files with the
-  old ones.
+---------------------------------
 
-  The most common case of that would be if there was a typo in the album
-  or artist name for an album, and that typo was replicated in the directory
-  structure containing the files.  Fixing the typo would involve changing
-  both the tags and the directory names.  In order to keep the addition time
-  intact in this case, you would have to perform both steps separately, running
-  an update after each one.
 
-Limitations
------------
+.. note:: You may choose more options using following tabs:
 
-There are some inherent limitations of Exordium, based on the assumptions
-that have been made during its development (and in my own music library).
+"Statistics" tab
 
-- The artist name "Various" is reserved.  Tracks with an artist tag of
-  "Various" will not be added to the library.
 
-- Artist and Trackname tags are required.  Tracks will not be added to
-  the library if either of those tags are missing.
+- Define the confidence level for hypothesis testing.
+- Select the type of alternative hypothesis.
 
-- If two Various Artists albums with the same album name exist in the
-  library, they'll end up stored as one single album in the DB.
+----------------------------------
 
-- If two directories contain files which seem to be in the same album (by
-  the same artist), you'll end up with an album which spans directories.
-  Behavior may not be well-defined in that case.
+.. figure:: images/help_img/parametricTests/oneProportion/statistics.jpg
+    :align: center
+    :height: 750
+    :width: 750
+    :alt: oneProportionStatistics
 
-- Exordium completely ignores genre tags.  I've personally always been
-  lousy at putting reasonable values in there on my media, and so that's
-  been very unimportant to me.  It'd probably be good to support them
-  anyway, though.
+---------------------------------
 
-- Exordium only supports mp3, ogg, and m4a currently, though other
-  support should be reasonably simple to add in, so long as Mutagen
-  supports the format.
+"Graphs" tab
 
-- m4a tags don't seem to allow for Ensemble or Conductor, so that data
-  will never be present for m4a files.  (If support for those tags is
-  in there somewhere, I'd like to hear about it.)
+
+- Choose either counts or percentages to generate the bar plot(s).
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/oneProportion/graphs.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: oneProportionGraphs
+
+---------------------------------
+
+"Options" tab
+
+
+- Choose p value computation option as asymptotic or exact.
+- Identify the category that indicates the success.
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/oneProportion/options.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: oneProportionOptions
+
+---------------------------------
+
+
+Step 2: Get your desired outputs
+
+- Display table with the descriptive statistics of the selected variables.
+- Switch between variables and table representations using combo-box button.
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/oneProportion/tableResults.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: oneProportionResults
+
+.. figure:: images/help_img/parametricTests/oneProportion/tableResults2.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: oneProportionResults
+
+---------------------------------
+
+
+- Display the One Proportion Test results
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/oneProportion/testResults.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: oneProportionTestResults
+
+.. figure:: images/help_img/parametricTests/oneProportion/testResults2.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: oneProportionTestResults
+
+
+---------------------------------
+
+- Display interactive plots:
+- Bar plot
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/oneProportion/graphResults.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: oneProportionScatterPlot
+
+----------------------------------
+
+
+
+
+Two Proportions Test
+--------------------
+
+How to select this module?
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Parametric Tests 
+
+.. figure:: images/help_img/step.png
+    :align: left
+    :height: 40
+    :width: 40
+
+Two Proportions Test
+
+General aim
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- This module can be used to estimate the proportions of two independent populations and compare them each other.
+
+What can you do using this module?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Compute several descriptive statistics to describe the distribution of categorical data and estimate the proportions of two independent populations.
+- Compare the estimated proportions each other.
+- Use asymptotic or exact test procedures in computation of p values.
+- Display the data distribution of variables with interactive bar plots either for counts or percentages.
+
+
+Usage
+~~~~~~
+
+Step 1: Define your variables from "Variables" tab:
+
+
+- Select response categorical variable(s) of interest(s) that will be used for comparison.
+- Select group variable(s) of interest(s) whose categories will be compared with each other.
+- Use “Sample Input” if you will enter the necessary values of summarised data instead of using the entire data.
+- Click Run button to execute the analysis.
+
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/twoProportions/variables.jpg
+    :align: center
+    :height: 400
+    :width: 400
+    :alt: twoProportionsVariables
+
+---------------------------------
+
+
+.. note:: You may choose more options using following tabs:
+
+"Statistics" tab
+
+
+- Define the confidence level for hypothesis testing.
+- Select the type of alternative hypothesis.
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/twoProportions/statistics.jpg
+    :align: center
+    :height: 750
+    :width: 750
+    :alt: twoProportionsStatistics
+
+---------------------------------
+
+"Graphs" tab
+
+
+- Choose either counts or percentages to generate the bar plot(s).
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/twoProportions/graph.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: twoProportionsGraphs
+
+---------------------------------
+
+"Options" tab
+
+
+- Identify the group variable categories that will be compared with each other.
+- Choose p value computation option as asymptotic or exact.
+- Identify the category that indicates the success.
+- Manage missing values with either complete case or by variable deletion.
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/twoProportions/options.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: twoProportionsOptions
+
+---------------------------------
+
+
+Step 2: Get your desired outputs
+
+- Display table with the descriptive statistics of the selected variables.
+- Switch between variables using combo-box button.
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/twoProportions/tableResults.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: twoProportionsResults
+
+.. figure:: images/help_img/parametricTests/twoProportions/tableResults2.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: twoProportionsResults
+
+---------------------------------
+
+
+- Display the Two Proportion Test results.
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/twoProportions/testResults.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: twoProportionsTestResults
+
+.. figure:: images/help_img/parametricTests/twoProportions/testResults2.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: twoProportionsTestResults
+
+
+---------------------------------
+
+- Display interactive plots:
+- Bar plot
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/twoProportions/graphResults.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: twoProportionsScatterPlot
+
+----------------------------------
+
+
+
+
+One Sample t Test
+-----------------
+
+How to select this module?
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Parametric Tests 
+
+.. figure:: images/help_img/step.png
+    :align: left
+    :height: 40
+    :width: 40
+
+One Sample t Test
+
+General aim
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- This module can be used to estimate the mean of the population and compare whether it differs from a specified reference value.
+
+What can you do using this module?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Compute several descriptive statistics to describe the distribution of numerical data and estimate the mean of the population.
+- Compare the estimated mean with a specified reference value.
+- Display the data distribution of variables with interactive error bar plots and boxplots.
+- Test whether the data distributed normally or not using Shapiro-Wilk’s test.
+
+
+Usage
+~~~~~~
+
+Step 1: Define your variables from "Variables" tab:
+
+
+- Select numerical variable(s) of interest(s) for descriptive statistics and comparison.
+- Enter the test value (the mean to be compared).
+- Click Run button to execute the analysis.
+
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/oneSampleT/variables.jpg
+    :align: center
+    :height: 400
+    :width: 400
+    :alt: oneSampleTVariables
+
+---------------------------------
+
+
+.. note:: You may choose more options using following tabs:
+
+"Statistics" tab
+
+
+- Define the confidence level for hypothesis testing.
+- Check the box for Shapiro-Wilk’s normality test.
+- Select the type of alternative hypothesis.
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/oneSampleT/statistics.jpg
+    :align: center
+    :height: 750
+    :width: 750
+    :alt: oneSampleTStatistics
+
+---------------------------------
+
+"Graphs" tab
+
+
+- Choose one or more available graphs: Error bar and Box Plot.
+- Identify what the error bars will represent: confidence intervals, standard errors or standard deviations.
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/oneSampleT/graphs.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: oneSampleTGraphs
+
+---------------------------------
+
+Step 2: Get your desired outputs
+
+- Display table with the descriptive statistics of the selected variables.
+- Switch between variables using combo-box button.
+- Click ‘Show All’ to display results for all variables in same screen.
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/oneSampleT/tableResults.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: oneSampleTResults
+
+.. figure:: images/help_img/parametricTests/oneSampleT/tableResults2.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: oneSampleTResults
+
+---------------------------------
+
+
+- Display Shapiro-Wilk’s Normality Test result
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/oneSampleT/testResults2.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: oneSampleTTestResults
+
+
+---------------------------------
+
+
+- Display one sample t test result.
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/oneSampleT/testResults.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: oneSampleTTestResults
+
+
+---------------------------------
+
+- Display interactive plots:
+- Error bar
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/oneSampleT/graphResults.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: oneSampleTScatterPlot
+
+----------------------------------
+
+- Error bar
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/oneSampleT/graphResults2.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: oneSampleTScatterPlot
+
+----------------------------------
+
+
+
+
+Independent Two Samples t Test
+-----------------------------
+
+How to select this module?
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Parametric Tests 
+
+.. figure:: images/help_img/step.png
+    :align: left
+    :height: 40
+    :width: 40
+
+Independent Two Samples t Test
+
+General aim
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- This module can be used to estimate the mean of two independent populations and compare them each other.
+
+What can you do using this module?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Compute several descriptive statistics to describe the distribution of numerical data and estimate the means of two independent populations.
+- Compare the estimated means each other using t test.
+- Compare the estimated means each other using Welch test, if the group variances are heterogeneous to each other.
+- Display the data distribution of variables with interactive error bar plots and boxplots.
+- Test whether the data distributed normally or not using Shapiro-Wilk’s test.
+- Test whether the group variances are homogeneous to each other.
+
+
+Usage
+~~~~~~
+
+Step 1: Define your variables from "Variables" tab:
+
+
+- Select response numerical variable(s) of interest(s) that will be used for comparison.
+- Select group variable(s) of interest(s) whose categories will be compared with each other.
+- Change the test value if necessary (to test whether the mean differences are equal to a specified test value).
+- Click Run button to execute the analysis.
+
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/independentTwoSamplesT/variables.jpg
+    :align: center
+    :height: 400
+    :width: 400
+    :alt: independentTwoSamplesTVariables
+
+---------------------------------
+
+
+.. note:: You may choose more options using following tabs:
+
+"Statistics" tab
+
+
+- Define the confidence level for hypothesis testing.
+- Check the box for Shapiro-Wilk’s normality test.
+- Check the box for Levene variance homogeneity test with the location median or mean.
+- Select the type of alternative hypothesis.
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/independentTwoSamplesT/statistics.jpg
+    :align: center
+    :height: 750
+    :width: 750
+    :alt: independentTwoSamplesTStatistics
+
+---------------------------------
+
+"Graphs" tab
+
+
+- Choose one or more available graphs: Error bar and Box Plot.
+- Identify what the error bars will represent: confidence intervals, standard errors or standard deviations.
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/independentTwoSamplesT/graphs.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: independentTwoSamplesTGraphs
+
+---------------------------------
+
+"Options" tab
+
+
+- Identify the group variable categories that will be compared with each other.
+- Manage missing values with either complete case or by variable deletion.
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/independentTwoSamplesT/options.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: independentTwoSamplesTGraphs
+
+---------------------------------
+
+Step 2: Get your desired outputs
+
+- Display table with the descriptive statistics of the selected variables.
+- Switch between variables using combo-box button.
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/independentTwoSamplesT/tableResults.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: oneSampleTResults
+
+.. figure:: images/help_img/parametricTests/independentTwoSamplesT/tableResults2.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: independentTwoSamplesTResults
+
+---------------------------------
+
+
+- Display Shapiro-Wilk’s Normality Test result.
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/independentTwoSamplesT/testResults5.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: independentTwoSamplesTTestResults
+
+
+---------------------------------
+
+
+- Display Levene variance homogeneity test result.
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/independentTwoSamplesT/testResults6.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: independentTwoSamplesTTestResults
+
+
+---------------------------------
+
+
+- Display the Independent Two Samples t Test results.
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/independentTwoSamplesT/testResults.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: oneSampleTTestResults
+
+.. figure:: images/help_img/parametricTests/independentTwoSamplesT/testResults2.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: independentTwoSamplesTTestResults
+
+
+---------------------------------
+
+
+- Display Welch Test result if the group variances are heterogeneous to each other
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/independentTwoSamplesT/testResults3.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: oneSampleTTestResults
+
+.. figure:: images/help_img/parametricTests/independentTwoSamplesT/testResults4.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: independentTwoSamplesTTestResults
+
+---------------------------------
+
+- Display interactive plots:
+- Error bar
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/independentTwoSamplesT/graphResults.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: independentTwoSamplesTScatterPlot
+
+----------------------------------
+
+- Error bar
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/independentTwoSamplesT/graphResults2.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: independentTwoSamplesTScatterPlot
+
+----------------------------------
+
+
+
+
+
+
+Dependent Two Samples t Test
+-----------------------------
+
+How to select this module?
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Parametric Tests 
+
+.. figure:: images/help_img/step.png
+    :align: left
+    :height: 40
+    :width: 40
+
+Dependent Two Samples t Test
+
+General aim
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- This module can be used to estimate and compare the mean of two dependent populations and compare them each other.
+
+What can you do using this module?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Compute several descriptive statistics to describe the distribution of numerical data and estimate the means of two dependent populations.
+- Compute several descriptive statistics for differences.
+- Compare the estimated paired means each other.
+- Compute the correlation estimates between paired samples.
+- Display the data distribution of variables with interactive error bar plots and boxplots.
+- Test whether the data distributed normally or not using Shapiro-Wilk’s test.
+
+
+Usage
+~~~~~~
+
+Step 1: Define your variables from "Variables" tab:
+
+
+- Select the first numerical variable(s) of interest(s) from ‘Variable One’.
+- Select the second numerical variable(s) of interest(s) from ‘Variable Two’.
+- Change the test value if necessary (to test whether the mean differences are equal to a specified test value).
+- Click Run button to execute the analysis.
+
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/dependentTwoSamplesT/variables.png
+    :align: center
+    :height: 400
+    :width: 400
+    :alt: dependentTwoSamplesTVariables
+
+---------------------------------
+
+
+.. note:: You may choose more options using following tabs:
+
+"Statistics" tab
+
+
+- Define the confidence level for hypothesis testing.
+- Check the box for Shapiro-Wilk’s normality test.
+- Check the box for paired correlations.
+- Check the box for descriptive statistics for differences (%)
+- Select the type of alternative hypothesis
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/dependentTwoSamplesT/statistics.png
+    :align: center
+    :height: 750
+    :width: 750
+    :alt: dependentTwoSamplesTStatistics
+
+---------------------------------
+
+"Graphs" tab
+
+
+- Choose one or more available graphs: Error bar and Box Plot
+- Identify what the error bars will represent: confidence intervals, standard errors or standard deviations
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/dependentTwoSamplesT/graphs.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: dependentTwoSamplesTGraphs
+
+---------------------------------
+
+Step 2: Get your desired outputs
+
+- Display table with the descriptive statistics of the selected variables
+- Switch between variables using combo-box button
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/dependentTwoSamplesT/tableResults.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: oneSampleTResults
+
+.. figure:: images/help_img/parametricTests/dependentTwoSamplesT/tableResults2.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: dependentTwoSamplesTResults
+
+---------------------------------
+
+
+- Display Shapiro-Wilk’s Normality Test result.
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/dependentTwoSamplesT/testResults5.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: dependentTwoSamplesTTestResults
+
+
+---------------------------------
+
+
+- Display the correlation estimates between paired samples.
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/dependentTwoSamplesT/testResults3.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: oneSampleTTestResults
+
+.. figure:: images/help_img/parametricTests/dependentTwoSamplesT/testResults4.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: dependentTwoSamplesTTestResults
+
+
+---------------------------------
+
+
+- Display the Dependent Two Samples t Test results.
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/dependentTwoSamplesT/testResults.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: oneSampleTTestResults
+
+.. figure:: images/help_img/parametricTests/dependentTwoSamplesT/testResults2.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: dependentTwoSamplesTTestResults
+
+
+---------------------------------
+
+- Display interactive plots:
+- Error bar
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/dependentTwoSamplesT/graphResults.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: dependentTwoSamplesTScatterPlot
+
+----------------------------------
+
+- Error bar
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/dependentTwoSamplesT/graphResults2.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: dependentTwoSamplesTScatterPlot
+
+----------------------------------
+
+
+
+
+
+
+One Way ANOVA Test
+------------------
+
+How to select this module?
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Parametric Tests 
+
+.. figure:: images/help_img/step.png
+    :align: left
+    :height: 40
+    :width: 40
+
+One-Way ANOVA Test
+
+General aim
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- This module can be used to estimate the mean of two or more independent populations and compare them each other.
+
+What can you do using this module?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Compute several descriptive statistics to describe the distribution of numerical data and estimate the means of two dependent populations.
+- Compare the estimated means each other using F test.
+- Compare the estimated means each other using Welch test, if the group variances are heterogeneous to each other.
+- Apply pairwise comparisons with one or more available post-hoc tests.
+- Display the data distribution of variables with interactive error bar plots and boxplots.
+- Test whether the data distributed normally or not using Shapiro-Wilk’s test.
+- Test whether the group variances are homogeneous to each other.
+
+
+Usage
+~~~~~~
+
+Step 1: Define your variables from "Variables" tab:
+
+
+- Select response numerical variable(s) of interest(s) that will be used for comparison
+- Select group variable(s) of interest(s) whose categories will be compared with each other
+
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/oneWayANOVA/variables.jpg
+    :align: center
+    :height: 400
+    :width: 400
+    :alt: oneWayANOVAVariables
+
+---------------------------------
+
+
+.. note:: You may choose more options using following tabs:
+
+"Statistics" tab
+
+- Define the confidence level for hypothesis testing.
+- Check the box for Shapiro-Wilk’s normality test.
+- Check the box for Levene variance homogeneity test with the location median or mean.
+- Check the box for Welch test.
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/oneWayANOVA/statistics.jpg
+    :align: center
+    :height: 750
+    :width: 750
+    :alt: oneWayANOVAStatistics
+
+---------------------------------
+
+"Graphs" tab
+
+- Choose one or more available graphs: Error bar and Box Plot
+- Identify what the error bars will represent: confidence intervals, standard errors or standard deviations
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/oneWayANOVA/graphs.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: oneWayANOVAGraphs
+
+---------------------------------
+
+
+"Options" tab
+
+- Manage missing values with either complete case or by variable deletion.
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/oneWayANOVA/options.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: oneWayANOVAGraphs
+
+---------------------------------
+
+Step 2: Get your desired outputs
+
+- Display table with the descriptive statistics of the selected variables.
+- Switch between variables using combo-box button.
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/oneWayANOVA/tableResults.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: oneWayANOVAResults
+
+---------------------------------
+
+- Display Shapiro-Wilk’s Normality Test result
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/oneWayANOVA/testResults3.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: oneWayANOVATestResults
+
+---------------------------------
+
+- Display the One-Way ANOVA results
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/oneWayANOVA/testResults.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: oneSampleTTestResults
+
+---------------------------------
+
+
+- Display Levene variance homogeneity test result.
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/oneWayANOVA/testResults4.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: oneWayANOVATestResults
+
+----------------------------------  
+
+- Display Welch Test result if the group variances are heterogeneous to each other.
+
+----------------------------------    
+
+.. figure:: images/help_img/parametricTests/oneWayANOVA/testResults2.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: oneWayANOVATestResults
+
+
+---------------------------------
+
+- Display interactive plots:
+- Error bar
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/oneWayANOVA/graphResults.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: oneWayANOVAErrorBar
+
+----------------------------------
+
+- Error bar
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/oneWayANOVA/graphResults2.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: oneWayANOVABoxPlot
+
+----------------------------------
+
+
+
+
+Two Way ANOVA Test
+------------------
+
+How to select this module?
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Parametric Tests 
+
+.. figure:: images/help_img/step.png
+    :align: left
+    :height: 40
+    :width: 40
+
+Two-Way ANOVA Test
+
+General aim
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- This module can be used to estimate and compares whether the group means are different in case of two categorical factor variables.
+
+What can you do using this module?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Compute several descriptive statistics to describe the distribution of numerical data and estimate the means in case of two categorical factor variables.
+- Compare the estimated means in case of two categorical factor variables using F test.
+- Apply pairwise comparisons with one or more available post-hoc tests.
+- Display the data distribution of variables with main effects and interaction plots.
+- Test whether the data distributed normally or not using Shapiro-Wilk’s test.
+- Test whether the group variances are homogeneous to each other.
+
+
+Usage
+~~~~~~
+
+Step 1: Define your variables from "Variables" tab:
+
+
+- Select response numerical variable(s) of interest(s) that will be used for comparison.
+- Select two group variables of interests whose effect on the response variable is investigated.
+
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/twoWayANOVA/variables.jpg
+    :align: center
+    :height: 400
+    :width: 400
+    :alt: twoWayANOVAVariables
+
+---------------------------------
+
+
+.. note:: You may choose more options using following tabs:
+
+"Statistics" tab
+
+- Define the confidence level for hypothesis testing
+- Check the box for Shapiro-Wilk’s normality test
+- Check the box for Levene variance homogeneity test with the location median or mean
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/twoWayANOVA/statistics.jpg
+    :align: center
+    :height: 750
+    :width: 750
+    :alt: twoWayANOVAStatistics
+
+---------------------------------
+
+"Graphs" tab
+
+- Choose one or more available graphs: Main Effects Plot and Interaction Plot
+- Identify the style of display: only means or mean and error bars
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/twoWayANOVA/graphs.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: twoWayANOVAGraphs
+
+---------------------------------
+
+
+"Options" tab
+
+- Identify the contrasts for each factor: treatment, polynomial, helmert or sum
+- Select the type of sum of squares: type I, type II or type III
+- Manage missing values with either complete case or by variable deletion
+- Select the type of Anova model: full model or main effects model
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/twoWayANOVA/options.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: twoWayANOVAGraphs
+
+---------------------------------
+
+Step 2: Get your desired outputs
+
+- Display table with the descriptive statistics of the selected variables
+- Switch between variables using combo-box button
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/twoWayANOVA/tableResults.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: twoWayANOVAResults
+
+.. figure:: images/help_img/parametricTests/twoWayANOVA/tableResults2.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: twoWayANOVAResults
+
+---------------------------------
+
+- Display Shapiro-Wilk’s Normality Test result
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/twoWayANOVA/testResults5.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: twoWayANOVATestResults
+
+---------------------------------
+
+- Display the Two-Way ANOVA results
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/twoWayANOVA/testResults.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: twoSampleTTestResults
+
+.. figure:: images/help_img/parametricTests/twoWayANOVA/testResults2.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: twoSampleTTestResults    
+
+---------------------------------
+
+
+- Display Levene variance homogeneity test result.
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/twoWayANOVA/testResults6.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: twoWayANOVATestResults
+
+----------------------------------  
+
+- Display the estimated parameters
+
+----------------------------------    
+
+.. figure:: images/help_img/parametricTests/twoWayANOVA/testResults3.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: twoWayANOVATestResults
+
+.. figure:: images/help_img/parametricTests/twoWayANOVA/testResults4.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: twoWayANOVATestResults    
+
+
+---------------------------------
+
+- Display interactive plots:
+- Main effects plot
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/twoWayANOVA/graphResults.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: twoWayANOVAErrorBar
+
+----------------------------------
+
+- Interaction plot
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/twoWayANOVA/graphResults2.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: twoWayANOVABoxPlot
+
+----------------------------------
+
+
+
+
+
+
+One Variance Test
+------------------
+
+How to select this module?
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Parametric Tests 
+
+.. figure:: images/help_img/step.png
+    :align: left
+    :height: 40
+    :width: 40
+
+One Variance Test
+
+General aim
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- This module can be used to estimate the variance of the population and compare whether it differs from a specified reference value.
+
+What can you do using this module?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Compute several descriptive statistics to describe the distribution of numerical data and estimate the mean of the population
+- Compare the estimated variance with a specified reference value
+- Display the data distribution of variables with interactive error bar plots and boxplots
+- Test whether the data distributed normally or not using Shapiro-Wilk’s test
+
+
+Usage
+~~~~~~
+
+Step 1: Define your variables from "Variables" tab:
+
+
+- Select response numerical variable(s) of interest(s) that will be used for comparison
+- Enter the test variance (the variance to be compared)
+- Use “Sample Input” if you will enter the necessary values of summarised data instead of using the entire data
+
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/oneVariance/variables.jpg
+    :align: center
+    :height: 400
+    :width: 400
+    :alt: oneVarianceVariables
+
+---------------------------------
+
+
+.. note:: You may choose more options using following tabs:
+
+"Statistics" tab
+
+- Define the confidence level for hypothesis testing
+- Check the box for Shapiro-Wilk’s normality test
+- Select the type of alternative hypothesis
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/oneVariance/statistics.jpg
+    :align: center
+    :height: 750
+    :width: 750
+    :alt: oneVarianceStatistics
+
+---------------------------------
+
+"Graphs" tab
+
+- Choose one or more available graphs: Error bar and Box Plot
+- Identify what the error bars will represent: confidence intervals, standard errors or standard deviations
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/oneVariance/graphs.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: oneVarianceGraphs
+
+---------------------------------
+
+
+Step 2: Get your desired outputs
+
+- Display table with the descriptive statistics of the selected variables
+- Switch between variables using combo-box button
+- Click ‘Show All’ to display results for all variables in same screen
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/oneVariance/tableResults.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: oneVarianceResults
+
+---------------------------------
+
+- Display Shapiro-Wilk’s Normality Test result
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/oneVariance/testResults2.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: oneVarianceTestResults
+
+---------------------------------
+
+- Display the One Variance Test results
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/oneVariance/testResults.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: twoSampleTTestResults
+
+---------------------------------
+
+- Display interactive plots:
+- Error Bar
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/oneVariance/graphResults.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: oneVarianceANOVAErrorBar
+
+----------------------------------
+
+- Box Plot
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/oneVariance/graphResults2.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: oneVarianceANOVABoxPlot
+
+----------------------------------
+
+
+
+Two Variance Test
+------------------
+
+How to select this module?
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Parametric Tests 
+
+.. figure:: images/help_img/step.png
+    :align: left
+    :height: 40
+    :width: 40
+
+Two Variance Test
+
+General aim
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- This module can be used to estimate the variance of two independent populations and compare them each other.
+
+What can you do using this module?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Compute several descriptive statistics to describe the distribution of numerical data and estimate the mean of the population
+- Compare the estimated variance with a specified reference value
+- Display the data distribution of variables with interactive error bar plots and boxplots
+- Test whether the data distributed normally or not using Shapiro-Wilk’s test
+
+
+Usage
+~~~~~~
+
+Step 1: Define your variables from "Variables" tab:
+
+- Select response numerical variable(s) of interest(s) that will be used for comparison
+- Select group variable(s) of interest(s) whose categories will be compared with each other
+- Use “Sample Input” if you will enter the necessary values of summarised data instead of using the entire data
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/twoVariances/variables.jpg
+    :align: center
+    :height: 400
+    :width: 400
+    :alt: twoVarianceVariables
+
+---------------------------------
+
+
+.. note:: You may choose more options using following tabs:
+
+"Statistics" tab
+
+- Define the confidence level for hypothesis testing
+- Check the box for Shapiro-Wilk’s normality test
+- Select the type of alternative hypothesis
+- Choose one or more available comparison tests: F, Levene and Bartlett tests
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/twoVariances/statistics.jpg
+    :align: center
+    :height: 750
+    :width: 750
+    :alt: twoVarianceStatistics
+
+---------------------------------
+
+"Graphs" tab
+
+- Choose one or more available graphs: Error bar and Box Plot
+- Identify what the error bars will represent: confidence intervals, standard errors or standard deviations
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/twoVariances/graphs.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: twoVarianceGraphs
+
+---------------------------------
+
+"Options" tab
+
+- Identify the group variable categories that will be compared with each other
+- Manage missing values with either complete case or by variable deletion
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/twoVariances/options.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: twoVarianceOptions
+
+---------------------------------
+
+
+Step 2: Get your desired outputs
+
+- Display table with the descriptive statistics of the selected variables
+- Switch between variables using combo-box button
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/twoVariances/tableResults.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: twoVarianceResults
+
+.. figure:: images/help_img/parametricTests/twoVariances/tableResults2.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: twoVarianceResults    
+
+---------------------------------
+
+- Display Shapiro-Wilk’s Normality Test result
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/twoVariances/testResults2.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: twoVarianceTestResults
+
+---------------------------------
+
+- Display the Two Variance Test results
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/twoVariances/testResults.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: twoSampleTTestResults
+
+---------------------------------
+
+- Display interactive plots:
+- Error Bar
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/twoVariances/graphResults.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: twoVarianceANOVAErrorBar
+
+----------------------------------
+
+- Box Plot
+
+----------------------------------
+
+.. figure:: images/help_img/parametricTests/twoVariances/graphResults2.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: twoVarianceANOVABoxPlot
+
+----------------------------------
+
+
+
+

@@ -89,8 +89,41 @@
 <li class="toctree-l1"><a class="reference internal" href="descriptives.html">Descriptives</a></li>
 <li class="toctree-l1"><a class="reference internal" href="parametric_tests.html">Parametric Tests</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Nonparametric Tests</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#assumptions">Assumptions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#limitations">Limitations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#randomness-test">Randomness Test</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#how-to-select-this-module">How to select this module?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#general-aim">General aim</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#what-can-you-do-using-this-module">What can you do using this module?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#usage">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#one-sample-test">One Sample Test</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">How to select this module?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">General aim</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">What can you do using this module?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#independent-two-samples-test">Independent Two Samples Test</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id5">How to select this module?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">General aim</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">What can you do using this module?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#dependent-two-samples-test">Dependent Two Samples Test</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id9">How to select this module?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id10">General aim</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id11">What can you do using this module?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id12">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#independent-k-samples-test">Independent k Samples Test</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id13">How to select this module?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id14">General aim</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id15">What can you do using this module?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id16">Usage</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="regression.html">Regression</a></li>
@@ -143,166 +176,599 @@
             
   <div class="section" id="nonparametric-tests">
 <h1>Nonparametric Tests<a class="headerlink" href="#nonparametric-tests" title="Permalink to this headline">¶</a></h1>
-<p>As mentioned on the main page, Exordium does not really attempt to be
-a general-purpose web music library suitable for widespread use.  The
-only configuration options currently available are those necessary for
-basic operation.  Exordium was born out of my persistent
-dissatisfaction with existing web music library applications.  I&#8217;ve
-been using various library applications over the years but have always
-ended up maintaining my own patchsets to alter their behavior to suit
-what I like, and in the end I figured it would be more rewarding to
-just write my own.</p>
-<p>So, Exordium represents essentially my own personal ideal of a web
-music library application, and its design decisions and operational
-goals reflect a very specific set of requirements: my own.  If your
-ideal music library differs from my own in even moderate ways, other
-music library apps are much more likely to be to your liking.</p>
-<p>I would, of course, be happy to accept patches which add, extend, or
-modify Exordium behavior, so long as the current functionality remains
-the default.  I certainly don&#8217;t actually <em>expect</em> any patches, of course,
-given that Exordium&#8217;s target market is exactly one individual.</p>
-<div class="section" id="assumptions">
-<h2>Assumptions<a class="headerlink" href="#assumptions" title="Permalink to this headline">¶</a></h2>
-<ul>
-<li><p class="first">Except for the Javascript necessary to hook into jPlayer, and jPlayer
-itself, there is no client-side Javascript or AJAX-style dynamic page
-content.  All HTML is generated server-side.  The application is
-quite usable from text-based browsers.</p>
-</li>
-<li><p class="first">Music files must be accessible via the local filesystem on which Django
-is running, and stored as either mp3, ogg vorbis, or m4a (mp4a).</p>
-</li>
-<li><p class="first">The entire music library must be available from a single directory
-prefix.  If subdirs of this root dir span multiple volumes (or network
-mounts), that&#8217;s fine, but there is NO support for multiple libraries in
-Exordium.</p>
-</li>
-<li><p class="first">Exordium itself will never attempt to write to your library directory for
-any reason - all music files (and album art) are managed outside of
-this app.  Write access to a directory on the filesystem is required
-for zipfile downloads, but that directory need not be in your music
-library.</p>
-</li>
-<li><p class="first">Music files should be, in general, arranged scrupulously: All files
-within a single directory belong to the same album, and an album should
-never span multiple directories.  There&#8217;s actually plenty of wiggle room
-here, and Exordium should correctly deal with directories full of
-&#8220;miscellaneous&#8221; files, etc, but in general the library should be
-well-ordered and have albums contained in their own directories.  This
-is less important during the initial library import, but becomes much
-more important when updating tags or rearranging your filesystem layout,
-as Exordium uses the directory structure to help determine what kind of
-changes have been made.</p>
-<ul class="simple">
-<li>Directory containment is the primary method through which Various Artists
-albums are collated.  A group of files in the same directory with different
-artists but the same album name will be sorted into a single &#8220;Various&#8221;
-album containing all those tracks.  Conversely, if an album name is shared
-by tracks from different directories (each dir&#8217;s files with a different
-artist name), multiple albums will be created.</li>
-<li>Tracks without an album tag will be sorted into a &#8220;virtual&#8221; album entitled
-&#8220;Non-Album Tracks: Band Name&#8221; - this is the one case where it&#8217;s expected that
-this virtual &#8220;album&#8221; might span multiple directories.</li>
-</ul>
-</li>
-<li><p class="first">The artwork for albums should be contained in gif/jpg/png files stored
-alongside the mp3s/oggs/m4as, or in the immediate parent folder (in the case
-of multi-disc albums, for instance).  Filenames which start with &#8220;cover&#8221;
-will be preferred over other graphics in the directory.  PNGs will be
-preferred over JPGs, and JPGs will be preferred over GIFs.</p>
-<ul class="simple">
-<li>Artwork thumbnails will be stored directly in Django&#8217;s database, in
-blatant disregard for Django best practices.  IMO the benefits far
-outweigh the performance concerns, given the scale of data involved.</li>
-</ul>
-</li>
-<li><p class="first">Music files should be available directly via HTTP/HTTPS, using the same
-directory structure as the library.  This does not have to be on the same
-port or even server as Django, but the direct download and streaming
-functionality rely on having a direct URL to the files.</p>
-</li>
-<li><p class="first">Album zipfile downloads, similarly, require that the zipfile directory be
-accessible directly over the web.  As with the music files, this does not
-need to be on the same port or even server as Django, but Django will not
-serve the zipfile itself.  The reason for this is that I want to be able
-to pass the zipfile URL to other apps for downloading, and for downloads
-to be easily resumable in the event they&#8217;re accidentally cancelled before
-they&#8217;re finished.  The text on the download page mentions that zipfiles
-are kept for around 48 hours, but that cleanup is actually not a function
-of Exordium itself.  Instead, I just have a cronjob set on the box like so:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">0</span> <span class="mi">2</span> <span class="o">*</span> <span class="o">*</span> <span class="o">*</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">find</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">audio</span><span class="o">/</span><span class="n">exordiumzips</span> <span class="o">-</span><span class="nb">type</span> <span class="n">f</span> <span class="o">-</span><span class="n">name</span> <span class="s2">&quot;*.zip&quot;</span> <span class="o">-</span><span class="n">mtime</span> <span class="o">+</span><span class="mi">2</span> <span class="o">-</span><span class="nb">print</span> <span class="o">-</span><span class="n">exec</span> <span class="n">unzip</span> <span class="o">-</span><span class="n">v</span> <span class="p">{}</span> \<span class="p">;</span> <span class="o">-</span><span class="n">exec</span> <span class="n">rm</span> <span class="p">{}</span> \<span class="p">;</span>
-</pre></div>
+<p>‘Parametric Tests’ panel is used to estimate the population parameters (e.g. mean, variance and proportion) and compare them between groups, time points or user-specified custom values, when the parametric assumptions are met. Required test assumptions (e.g. data normality, variance homogeneity) are also available in each module, to assist the users on their decision to perform (or not perform) the right test module.</p>
+<div class="section" id="randomness-test">
+<h2>Randomness Test<a class="headerlink" href="#randomness-test" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="how-to-select-this-module">
+<h3>How to select this module?<a class="headerlink" href="#how-to-select-this-module" title="Permalink to this headline">¶</a></h3>
+<p>Parametric Tests</p>
+<div class="figure align-left">
+<a class="reference internal image-reference" href="_images/step.png"><img alt="_images/step.png" src="_images/step.png" style="width: 40px; height: 40px;" /></a>
 </div>
-</li>
-<li><p class="first">Tags for information commonly associated with classical music are
-supported, namely: Group/Ensemble, Conductor, and Composer.  <em>(For ID3
-tags: TPE2, TPE3, and TCOM, respectively.  In Ogg Vorbis, the more
-sensible ENSEMBLE, CONDUCTOR, and COMPOSER.)</em>  Albums will still be
-defined by their main Artist/Album association, and Artist is
-always a required field, whereas Group/Conductor/Composer are all
-optional.  Internally, these are all stored as &#8220;artists,&#8221; so when
-browsing by artist, Exordium should do the right thing and show you
-all albums containing an artist, whether they showed up as artist,
-composer, conductor, or ensemble.</p>
-</li>
-<li><p class="first">There are many live concert recordings in my personal library, which I&#8217;ve
-uniformly tagged with an album name starting with &#8220;YYYY.MM.DD - Live&#8221;.
-Given the volume of these albums, Exordium will automatically consider any
-album matching that name as a &#8220;live&#8221; album.  <em>(Dashes and underscores are
-also acceptable inbetween the date components.)</em>  By default, Exordium
-will hide those live albums from its display, since they otherwise often
-get in the way.  A checkbox is available in the lefthand column to turn
-on live album display, though, and it can be toggled at any time.</p>
-</li>
-<li><p class="first">The &#8220;addition date&#8221; of albums into the library is an important data point;
-Exordium&#8217;s main view is the twenty most recently-added albums.  To that
-point, updates of the music files will allow the album records to be
-updated while keeping the addition time intact.  Some specific cases in
-which this is ensured:</p>
+<p>Randomness Test</p>
+</div>
+<div class="section" id="general-aim">
+<h3>General aim<a class="headerlink" href="#general-aim" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>Updating album/artist names in the file&#8217;s tags</li>
-<li>Moving music files from one directory to another, or renaming the files</li>
-</ul>
-<p>Combining the two may, however, result in the album being deleted from
-the library and then re-added.  If the tags on a collection of files are
-updated (so that the file&#8217;s checksum changes), <strong>and</strong> the files are
-moved into a separate directory, the album will end up being re-added,
-since there&#8217;s no reasonable way to associate the updated files with the
-old ones.</p>
-<p>The most common case of that would be if there was a typo in the album
-or artist name for an album, and that typo was replicated in the directory
-structure containing the files.  Fixing the typo would involve changing
-both the tags and the directory names.  In order to keep the addition time
-intact in this case, you would have to perform both steps separately, running
-an update after each one.</p>
-</li>
+<li>‘Randomness’ module is useful to analyze the distribution of data to check whether it is random (patternless) or not.</li>
 </ul>
 </div>
-<div class="section" id="limitations">
-<h2>Limitations<a class="headerlink" href="#limitations" title="Permalink to this headline">¶</a></h2>
-<p>There are some inherent limitations of Exordium, based on the assumptions
-that have been made during its development (and in my own music library).</p>
+<div class="section" id="what-can-you-do-using-this-module">
+<h3>What can you do using this module?<a class="headerlink" href="#what-can-you-do-using-this-module" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>The artist name &#8220;Various&#8221; is reserved.  Tracks with an artist tag of
-&#8220;Various&#8221; will not be added to the library.</li>
-<li>Artist and Trackname tags are required.  Tracks will not be added to
-the library if either of those tags are missing.</li>
-<li>If two Various Artists albums with the same album name exist in the
-library, they&#8217;ll end up stored as one single album in the DB.</li>
-<li>If two directories contain files which seem to be in the same album (by
-the same artist), you&#8217;ll end up with an album which spans directories.
-Behavior may not be well-defined in that case.</li>
-<li>Exordium completely ignores genre tags.  I&#8217;ve personally always been
-lousy at putting reasonable values in there on my media, and so that&#8217;s
-been very unimportant to me.  It&#8217;d probably be good to support them
-anyway, though.</li>
-<li>Exordium only supports mp3, ogg, and m4a currently, though other
-support should be reasonably simple to add in, so long as Mutagen
-supports the format.</li>
-<li>m4a tags don&#8217;t seem to allow for Ensemble or Conductor, so that data
-will never be present for m4a files.  (If support for those tags is
-in there somewhere, I&#8217;d like to hear about it.)</li>
+<li>Compute several descriptive statistics to describe the distribution of categorical data and estimate the proportion of the population</li>
+<li>Test whether the data is random around the mean, median, mode statistics or a user-specified value</li>
+<li>Use asymptotic or exact test procedures in computation of p values</li>
+<li>Display the data distribution of variables with randomness plot</li>
 </ul>
+</div>
+<div class="section" id="usage">
+<h3>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h3>
+<p>Step 1: Define your variables from &#8220;Variables&#8221; tab:</p>
+<ul class="simple">
+<li>Select categorical variable(s) of interest(s) for descriptive statistics and comparison</li>
+<li>Change the test value if necessary (to test whether the data is random around the mean, median, mode statistics or a user-specified value)</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/variables1.png"><img alt="randomnessTestVariables" src="_images/variables1.png" style="width: 400px; height: 400px;" /></a>
+</div>
+<hr class="docutils" />
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You may choose more options using following tabs:</p>
+</div>
+<p>&#8220;Statistics&#8221; tab</p>
+<ul class="simple">
+<li>Choose one or more available randomness tests: Walf-Wolfovitz runs, Mann-Kendall rank or Bartel tests</li>
+<li>Select the type of alternative hypothesis</li>
+<li>Define the confidence level for hypothesis testing</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/statistics1.png"><img alt="randomnessTestStatistics" src="_images/statistics1.png" style="width: 750px; height: 750px;" /></a>
+</div>
+<hr class="docutils" />
+<p>&#8220;Graphs&#8221; tab</p>
+<ul class="simple">
+<li>Select Randomness plot</li>
+<li>Display the threshold line in the plot</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/graphs1.png"><img alt="randomnessTestGraphs" src="_images/graphs1.png" style="width: 650px; height: 650px;" /></a>
+</div>
+<hr class="docutils" />
+<p>&#8220;Options&#8221; tab</p>
+<ul class="simple">
+<li>Choose p value computation option as asymptotic or exact</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/options.png"><img alt="randomnessTestOptions" src="_images/options.png" style="width: 650px; height: 650px;" /></a>
+</div>
+<hr class="docutils" />
+<p>Step 2: Get your desired outputs</p>
+<ul class="simple">
+<li>Display table with the descriptive statistics of the selected variables</li>
+<li>Switch between variables using combo-box button</li>
+<li>Click ‘Show All’ to display results for all variables in same screen</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/tableResults1.png"><img alt="randomnessTestResults" src="_images/tableResults1.png" style="width: 650px; height: 650px;" /></a>
+</div>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/tableResults21.png"><img alt="randomnessTestResults" src="_images/tableResults21.png" style="width: 650px; height: 650px;" /></a>
+</div>
+<hr class="docutils" />
+<ul class="simple">
+<li>Display the Randomness Test results</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/testResults1.png"><img alt="randomnessTestTestResults" src="_images/testResults1.png" style="width: 650px; height: 650px;" /></a>
+</div>
+<hr class="docutils" />
+<ul class="simple">
+<li>Display interactive plots:</li>
+<li>Randomness Plot</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/graphResults1.png"><img alt="randomnessTestRandomnessPlot" src="_images/graphResults1.png" style="width: 650px; height: 650px;" /></a>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="one-sample-test">
+<h2>One Sample Test<a class="headerlink" href="#one-sample-test" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h3>How to select this module?<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>Parametric Tests</p>
+<div class="figure align-left">
+<a class="reference internal image-reference" href="_images/step.png"><img alt="_images/step.png" src="_images/step.png" style="width: 40px; height: 40px;" /></a>
+</div>
+<p>One Sample Test</p>
+</div>
+<div class="section" id="id2">
+<h3>General aim<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>This module can be used to estimate the median of the population and compare whether the data distribution differs from a specified reference value.</li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h3>What can you do using this module?<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Compute several descriptive statistics to describe the distribution of categorical data and estimate the proportion of the population</li>
+<li>Compare the data distribution with a specified reference value</li>
+<li>Display the data distribution of variables with interactive boxplots</li>
+<li>Test whether the data distributed normally or not using Shapiro-Wilk’s test</li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h3>Usage<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>Step 1: Define your variables from &#8220;Variables&#8221; tab:</p>
+<ul class="simple">
+<li>Select categorical variable(s) of interest(s) for descriptive statistics and comparison</li>
+<li>Enter the test value (the median to be compared)</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/variables2.png"><img alt="oneSampleVariables" src="_images/variables2.png" style="width: 400px; height: 400px;" /></a>
+</div>
+<hr class="docutils" />
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You may choose more options using following tabs:</p>
+</div>
+<p>&#8220;Statistics&#8221; tab</p>
+<ul class="simple">
+<li>Choose one or more available comparison tests: Wilcoxon or sign tests</li>
+<li>Check the box for Shapiro-Wilk’s normality test</li>
+<li>Select the type of alternative hypothesis</li>
+<li>Define the confidence level for hypothesis testing</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/statistics2.png"><img alt="oneSampleStatistics" src="_images/statistics2.png" style="width: 750px; height: 750px;" /></a>
+</div>
+<hr class="docutils" />
+<p>&#8220;Graphs&#8221; tab</p>
+<ul class="simple">
+<li>Select Box Plot</li>
+<li>Identify what the error bars will represent: confidence intervals, standard errors or standard deviations</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/graphs2.png"><img alt="oneSampleGraphs" src="_images/graphs2.png" style="width: 650px; height: 650px;" /></a>
+</div>
+<hr class="docutils" />
+<p>&#8220;Options&#8221; tab</p>
+<ul class="simple">
+<li>Choose p value computation option as asymptotic or exact</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/options1.png"><img alt="oneSampleOptions" src="_images/options1.png" style="width: 650px; height: 650px;" /></a>
+</div>
+<hr class="docutils" />
+<p>Step 2: Get your desired outputs</p>
+<ul class="simple">
+<li>Display table with the descriptive statistics of the selected variables</li>
+<li>Switch between variables using combo-box button</li>
+<li>Click ‘Show All’ to display results for all variables in same screen</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/tableResults3.png"><img alt="oneSampleResults" src="_images/tableResults3.png" style="width: 650px; height: 650px;" /></a>
+</div>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/tableResults22.png"><img alt="oneSampleResults" src="_images/tableResults22.png" style="width: 650px; height: 650px;" /></a>
+</div>
+<hr class="docutils" />
+<ul class="simple">
+<li>Display the One Sample Test results</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/testResults6.png"><img alt="oneSampleTestResults" src="_images/testResults6.png" style="width: 650px; height: 650px;" /></a>
+</div>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/testResults21.png"><img alt="oneSampleTestResults" src="_images/testResults21.png" style="width: 650px; height: 650px;" /></a>
+</div>
+<hr class="docutils" />
+<ul class="simple">
+<li>Display Shapiro-Wilk’s Normality Test result</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/testResults31.png"><img alt="oneSampleTestResults" src="_images/testResults31.png" style="width: 650px; height: 650px;" /></a>
+</div>
+<hr class="docutils" />
+<ul class="simple">
+<li>Display interactive plots:</li>
+<li>Box Plot</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/graphResults3.png"><img alt="oneSampleBoxPlot" src="_images/graphResults3.png" style="width: 650px; height: 650px;" /></a>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="independent-two-samples-test">
+<h2>Independent Two Samples Test<a class="headerlink" href="#independent-two-samples-test" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id5">
+<h3>How to select this module?<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>Parametric Tests</p>
+<div class="figure align-left">
+<a class="reference internal image-reference" href="_images/step.png"><img alt="_images/step.png" src="_images/step.png" style="width: 40px; height: 40px;" /></a>
+</div>
+<p>Independent Two Samples Test</p>
+</div>
+<div class="section" id="id6">
+<h3>General aim<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>This module can be used to estimate the medians of two independent populations and to identify whether the differences of the distribution between two independent samples differs from 0 (or a test value).</li>
+</ul>
+</div>
+<div class="section" id="id7">
+<h3>What can you do using this module?<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Compute several descriptive statistics to describe the distribution of numerical data and estimate the medians of two independent populations</li>
+<li>Identify whether the differences of the distribution between two independent samples differs from 0 (or a test value)</li>
+<li>Display the data distribution of variables with interactive boxplots</li>
+<li>Test whether the data distributed normally or not using Shapiro-Wilk’s test</li>
+<li>Test whether the group variances are homogeneous to each other</li>
+</ul>
+</div>
+<div class="section" id="id8">
+<h3>Usage<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p>Step 1: Define your variables from &#8220;Variables&#8221; tab:</p>
+<ul class="simple">
+<li>Select categorical variable(s) of interest(s) for descriptive statistics and comparison</li>
+<li>Select group variable(s) of interest(s) whose categories will be compared with each other</li>
+<li>Change the test value if necessary (to test whether the differences of the distribution between two independent samples are equal to a specified test value)</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/variables3.png"><img alt="independentTwoSamplesVariables" src="_images/variables3.png" style="width: 400px; height: 400px;" /></a>
+</div>
+<hr class="docutils" />
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You may choose more options using following tabs:</p>
+</div>
+<p>&#8220;Statistics&#8221; tab</p>
+<ul class="simple">
+<li>Choose one or more available comparison tests: Mann-Whitney U or Kolmogorov-Smirnov Z tests</li>
+<li>Check the box for Shapiro-Wilk’s normality test</li>
+<li>Check the box for Levene variance homogeneity test with the location median or mean</li>
+<li>Select the type of alternative hypothesis</li>
+<li>Define the confidence level for hypothesis testing</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/statistics3.png"><img alt="independentTwoSamplesStatistics" src="_images/statistics3.png" style="width: 750px; height: 750px;" /></a>
+</div>
+<hr class="docutils" />
+<p>&#8220;Graphs&#8221; tab</p>
+<ul class="simple">
+<li>Select Box Plot</li>
+<li>Identify what the error bars will represent: confidence intervals, standard errors or standard deviations</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/graphs3.png"><img alt="independentTwoSamplesGraphs" src="_images/graphs3.png" style="width: 650px; height: 650px;" /></a>
+</div>
+<hr class="docutils" />
+<p>&#8220;Options&#8221; tab</p>
+<ul class="simple">
+<li>Identify the group variable categories that will be compared with each other</li>
+<li>Manage missing values with either complete case or by variable deletion</li>
+<li>Choose p value computation option as asymptotic or exact</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/options2.png"><img alt="independentTwoSamplesOptions" src="_images/options2.png" style="width: 650px; height: 650px;" /></a>
+</div>
+<hr class="docutils" />
+<p>Step 2: Get your desired outputs</p>
+<ul class="simple">
+<li>Display table with the descriptive statistics of the selected variables</li>
+<li>Switch between variables using combo-box button</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/tableResults4.png"><img alt="independentTwoSamplesResults" src="_images/tableResults4.png" style="width: 650px; height: 650px;" /></a>
+</div>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/tableResults23.png"><img alt="oneSampleResults" src="_images/tableResults23.png" style="width: 650px; height: 650px;" /></a>
+</div>
+<hr class="docutils" />
+<ul class="simple">
+<li>Display the Independent Two Samples Test results</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/testResults7.png"><img alt="independentTwoSamplesTestResults" src="_images/testResults7.png" style="width: 650px; height: 650px;" /></a>
+</div>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/testResults22.png"><img alt="independentTwoSamplesTestResults" src="_images/testResults22.png" style="width: 650px; height: 650px;" /></a>
+</div>
+<hr class="docutils" />
+<ul class="simple">
+<li>Display Shapiro-Wilk’s Normality Test result</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/testResults32.png"><img alt="independentTwoSamplesTestResults" src="_images/testResults32.png" style="width: 650px; height: 650px;" /></a>
+</div>
+<hr class="docutils" />
+<ul class="simple">
+<li>Display Levene&#8217;s test for homogeneity result</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/testResults41.png"><img alt="independentTwoSamplesTestResults" src="_images/testResults41.png" style="width: 650px; height: 650px;" /></a>
+</div>
+<hr class="docutils" />
+<ul class="simple">
+<li>Display interactive plots:</li>
+<li>Box Plot</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/graphResults8.jpg"><img alt="independentTwoSamplesBoxPlot" src="_images/graphResults8.jpg" style="width: 650px; height: 650px;" /></a>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="dependent-two-samples-test">
+<h2>Dependent Two Samples Test<a class="headerlink" href="#dependent-two-samples-test" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id9">
+<h3>How to select this module?<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<p>Parametric Tests</p>
+<div class="figure align-left">
+<a class="reference internal image-reference" href="_images/step.png"><img alt="_images/step.png" src="_images/step.png" style="width: 40px; height: 40px;" /></a>
+</div>
+<p>Dependent Two Samples Test</p>
+</div>
+<div class="section" id="id10">
+<h3>General aim<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>This module can be used to estimate the medians of two dependent populations and to identify whether the differences of the distribution between two paired samples differs from 0 (or a test value).</li>
+</ul>
+</div>
+<div class="section" id="id11">
+<h3>What can you do using this module?<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Compute several descriptive statistics to describe the distribution of numerical data and estimate the medians of two independent populations</li>
+<li>Compute several descriptive statistics for differences</li>
+<li>Compare the estimated paired medians each other</li>
+<li>Compute the correlation estimates between paired samples</li>
+<li>Display the data distribution of variables with interactive boxplots</li>
+<li>Test whether the data distributed normally or not using Shapiro-Wilk’s test</li>
+</ul>
+</div>
+<div class="section" id="id12">
+<h3>Usage<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<p>Step 1: Define your variables from &#8220;Variables&#8221; tab:</p>
+<ul class="simple">
+<li>Select the first numerical variable(s) of interest(s) from ‘Variable One’</li>
+<li>Select the second numerical variable(s) of interest(s) from ‘Variable Two’</li>
+<li>Change the test value if necessary (to test whether the differences of the distribution between two independent samples are equal to a specified test value)</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/variables4.png"><img alt="dependentTwoSamplesVariables" src="_images/variables4.png" style="width: 400px; height: 400px;" /></a>
+</div>
+<hr class="docutils" />
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You may choose more options using following tabs:</p>
+</div>
+<p>&#8220;Statistics&#8221; tab</p>
+<ul class="simple">
+<li>Choose one or more available comparison tests: Wilcoxon and Sign tests</li>
+<li>Check the box for Shapiro-Wilk’s normality test</li>
+<li>Select the type of alternative hypothesis</li>
+<li>Define the confidence level for hypothesis testing</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/statistics4.png"><img alt="dependentTwoSamplesStatistics" src="_images/statistics4.png" style="width: 750px; height: 750px;" /></a>
+</div>
+<hr class="docutils" />
+<p>&#8220;Graphs&#8221; tab</p>
+<ul class="simple">
+<li>Select Box Plot</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/graphs4.png"><img alt="dependentTwoSamplesGraphs" src="_images/graphs4.png" style="width: 650px; height: 650px;" /></a>
+</div>
+<hr class="docutils" />
+<p>Step 2: Get your desired outputs</p>
+<ul class="simple">
+<li>Display table with the descriptive statistics of the selected variables</li>
+<li>Switch between variables using combo-box button</li>
+<li>Check the box for paired correlations</li>
+<li>Check the box for descriptive statistics for differences (%)</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/tableResults5.png"><img alt="dependentTwoSamplesResults" src="_images/tableResults5.png" style="width: 650px; height: 650px;" /></a>
+</div>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/tableResults24.png"><img alt="dependentTwoSamplesResults" src="_images/tableResults24.png" style="width: 650px; height: 650px;" /></a>
+</div>
+<hr class="docutils" />
+<ul class="simple">
+<li>Display the Dependent Two Samples Test results</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/testResults8.png"><img alt="dependentTwoSamplesTestResults" src="_images/testResults8.png" style="width: 650px; height: 650px;" /></a>
+</div>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/testResults23.png"><img alt="dependentTwoSamplesTestResults" src="_images/testResults23.png" style="width: 650px; height: 650px;" /></a>
+</div>
+<hr class="docutils" />
+<ul class="simple">
+<li>Display the correlation estimates between paired samples</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/testResults42.png"><img alt="dependentTwoSamplesTestResults" src="_images/testResults42.png" style="width: 650px; height: 650px;" /></a>
+</div>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/testResults51.png"><img alt="dependentTwoSamplesTestResults" src="_images/testResults51.png" style="width: 650px; height: 650px;" /></a>
+</div>
+<hr class="docutils" />
+<ul class="simple">
+<li>Display Shapiro-Wilk’s Normality Test result</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/testResults33.png"><img alt="dependentTwoSamplesTestResults" src="_images/testResults33.png" style="width: 650px; height: 650px;" /></a>
+</div>
+<hr class="docutils" />
+<ul class="simple">
+<li>Display interactive plots:</li>
+<li>Box Plot</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/graphResults4.png"><img alt="dependentTwoSamplesBoxPlot" src="_images/graphResults4.png" style="width: 650px; height: 650px;" /></a>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="independent-k-samples-test">
+<h2>Independent k Samples Test<a class="headerlink" href="#independent-k-samples-test" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id13">
+<h3>How to select this module?<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<p>Parametric Tests</p>
+<div class="figure align-left">
+<a class="reference internal image-reference" href="_images/step.png"><img alt="_images/step.png" src="_images/step.png" style="width: 40px; height: 40px;" /></a>
+</div>
+<p>Independent k Samples Test</p>
+</div>
+<div class="section" id="id14">
+<h3>General aim<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>This module can be used to estimate the medians and compare the distributions of two or more independent populations.</li>
+</ul>
+</div>
+<div class="section" id="id15">
+<h3>What can you do using this module?<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Compute several descriptive statistics to describe the distribution of numerical data and estimate the medians of two independent populations</li>
+<li>Compare the differences of the distribution among more than two independent samples</li>
+<li>Apply pairwise comparisons with one or more available post-hoc tests</li>
+<li>Display the data distribution of variables with interactive boxplots</li>
+<li>Test whether the data distributed normally or not using Shapiro-Wilk’s test</li>
+<li>Test whether the group variances are homogeneous to each other</li>
+</ul>
+</div>
+<div class="section" id="id16">
+<h3>Usage<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<p>Step 1: Define your variables from &#8220;Variables&#8221; tab:</p>
+<ul class="simple">
+<li>Select response numerical variable(s) of interest(s) that will be used for comparison</li>
+<li>Select group variable(s) of interest(s) whose categories will be compared with each other</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/variables5.png"><img alt="kIndependentSamplesVariables" src="_images/variables5.png" style="width: 400px; height: 400px;" /></a>
+</div>
+<hr class="docutils" />
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You may choose more options using following tabs:</p>
+</div>
+<p>&#8220;Statistics&#8221; tab</p>
+<ul class="simple">
+<li>Choose one or more available comparison tests: Kruskal-Wallis, Median and Van der Waerden scores tests</li>
+<li>Choose one or more available post-hoc tests: Siegel Castellan and Dunn’s</li>
+<li>Select the type of alternative hypothesis</li>
+<li>Define the confidence level for hypothesis testing</li>
+<li>Check the box for Shapiro-Wilk’s normality test</li>
+<li>Check the box for Levene variance homogeneity test with the location median or mean</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/statistics5.png"><img alt="kIndependentSamplesStatistics" src="_images/statistics5.png" style="width: 750px; height: 750px;" /></a>
+</div>
+<hr class="docutils" />
+<p>&#8220;Graphs&#8221; tab</p>
+<ul class="simple">
+<li>Select Box Plot</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/graphs5.png"><img alt="kIndependentSamplesGraphs" src="_images/graphs5.png" style="width: 650px; height: 650px;" /></a>
+</div>
+<hr class="docutils" />
+<p>&#8220;Options&#8221; tab</p>
+<ul class="simple">
+<li>SChoose p value computation option as asymptotic or exact</li>
+<li>Manage missing values with either complete case or by variable deletion</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/options3.png"><img alt="kIndependentSamplesOptions" src="_images/options3.png" style="width: 650px; height: 650px;" /></a>
+</div>
+<hr class="docutils" />
+<p>Step 2: Get your desired outputs</p>
+<ul class="simple">
+<li>Display table with the descriptive statistics of the selected variables</li>
+<li>Switch between variables using combo-box button</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/tableResults6.png"><img alt="kIndependentSamplesResults" src="_images/tableResults6.png" style="width: 650px; height: 650px;" /></a>
+</div>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/tableResults25.png"><img alt="kIndependentSamplesResults" src="_images/tableResults25.png" style="width: 650px; height: 650px;" /></a>
+</div>
+<hr class="docutils" />
+<ul class="simple">
+<li>Display the Independent k Samples results</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/testResults9.png"><img alt="kIndependentSamplesTestResults" src="_images/testResults9.png" style="width: 650px; height: 650px;" /></a>
+</div>
+<hr class="docutils" />
+<ul class="simple">
+<li>Display Shapiro-Wilk’s Normality Test result</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/testResults24.png"><img alt="kIndependentSamplesTestResults" src="_images/testResults24.png" style="width: 650px; height: 650px;" /></a>
+</div>
+<hr class="docutils" />
+<ul class="simple">
+<li>Display Levene variance homogeneity test result</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/testResults34.jpg"><img alt="kIndependentSamplesTestResults" src="_images/testResults34.jpg" style="width: 650px; height: 650px;" /></a>
+</div>
+<hr class="docutils" />
+<ul class="simple">
+<li>Display interactive plots:</li>
+<li>Box Plot</li>
+</ul>
+<hr class="docutils" />
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/graphResults5.png"><img alt="kIndependentSamplesBoxPlot" src="_images/graphResults5.png" style="width: 650px; height: 650px;" /></a>
+</div>
+<hr class="docutils" />
+</div>
 </div>
 </div>
 

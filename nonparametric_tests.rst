@@ -3,169 +3,887 @@
 Nonparametric Tests
 ===========================
 
-As mentioned on the main page, Exordium does not really attempt to be
-a general-purpose web music library suitable for widespread use.  The
-only configuration options currently available are those necessary for
-basic operation.  Exordium was born out of my persistent
-dissatisfaction with existing web music library applications.  I've
-been using various library applications over the years but have always
-ended up maintaining my own patchsets to alter their behavior to suit
-what I like, and in the end I figured it would be more rewarding to
-just write my own.
+‘Parametric Tests’ panel is used to estimate the population parameters (e.g. mean, variance and proportion) and compare them between groups, time points or user-specified custom values, when the parametric assumptions are met. Required test assumptions (e.g. data normality, variance homogeneity) are also available in each module, to assist the users on their decision to perform (or not perform) the right test module.
 
-So, Exordium represents essentially my own personal ideal of a web
-music library application, and its design decisions and operational
-goals reflect a very specific set of requirements: my own.  If your
-ideal music library differs from my own in even moderate ways, other
-music library apps are much more likely to be to your liking.
 
-I would, of course, be happy to accept patches which add, extend, or
-modify Exordium behavior, so long as the current functionality remains
-the default.  I certainly don't actually *expect* any patches, of course,
-given that Exordium's target market is exactly one individual.
+Randomness Test
+---------------
 
-Assumptions
------------
+How to select this module?
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-- Except for the Javascript necessary to hook into jPlayer, and jPlayer
-  itself, there is no client-side Javascript or AJAX-style dynamic page
-  content.  All HTML is generated server-side.  The application is
-  quite usable from text-based browsers.
+Parametric Tests 
 
-- Music files must be accessible via the local filesystem on which Django
-  is running, and stored as either mp3, ogg vorbis, or m4a (mp4a).
+.. figure:: images/help_img/step.png
+    :align: left
+    :height: 40
+    :width: 40
 
-- The entire music library must be available from a single directory
-  prefix.  If subdirs of this root dir span multiple volumes (or network
-  mounts), that's fine, but there is NO support for multiple libraries in
-  Exordium.
+Randomness Test
 
-- Exordium itself will never attempt to write to your library directory for
-  any reason - all music files (and album art) are managed outside of
-  this app.  Write access to a directory on the filesystem is required
-  for zipfile downloads, but that directory need not be in your music
-  library.
+General aim
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-- Music files should be, in general, arranged scrupulously: All files
-  within a single directory belong to the same album, and an album should
-  never span multiple directories.  There's actually plenty of wiggle room
-  here, and Exordium should correctly deal with directories full of
-  "miscellaneous" files, etc, but in general the library should be
-  well-ordered and have albums contained in their own directories.  This
-  is less important during the initial library import, but becomes much
-  more important when updating tags or rearranging your filesystem layout,
-  as Exordium uses the directory structure to help determine what kind of
-  changes have been made.
+- ‘Randomness’ module is useful to analyze the distribution of data to check whether it is random (patternless) or not.
 
-  - Directory containment is the primary method through which Various Artists
-    albums are collated.  A group of files in the same directory with different
-    artists but the same album name will be sorted into a single "Various"
-    album containing all those tracks.  Conversely, if an album name is shared
-    by tracks from different directories (each dir's files with a different
-    artist name), multiple albums will be created.
+What can you do using this module?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-  - Tracks without an album tag will be sorted into a "virtual" album entitled
-    "Non-Album Tracks: Band Name" - this is the one case where it's expected that
-    this virtual "album" might span multiple directories.
- 
-- The artwork for albums should be contained in gif/jpg/png files stored
-  alongside the mp3s/oggs/m4as, or in the immediate parent folder (in the case
-  of multi-disc albums, for instance).  Filenames which start with "cover"
-  will be preferred over other graphics in the directory.  PNGs will be
-  preferred over JPGs, and JPGs will be preferred over GIFs.
+- Compute several descriptive statistics to describe the distribution of categorical data and estimate the proportion of the population
+- Test whether the data is random around the mean, median, mode statistics or a user-specified value
+- Use asymptotic or exact test procedures in computation of p values
+- Display the data distribution of variables with randomness plot
 
-  - Artwork thumbnails will be stored directly in Django's database, in
-    blatant disregard for Django best practices.  IMO the benefits far
-    outweigh the performance concerns, given the scale of data involved.
 
-- Music files should be available directly via HTTP/HTTPS, using the same
-  directory structure as the library.  This does not have to be on the same
-  port or even server as Django, but the direct download and streaming
-  functionality rely on having a direct URL to the files.
+Usage
+~~~~~~
 
-- Album zipfile downloads, similarly, require that the zipfile directory be
-  accessible directly over the web.  As with the music files, this does not
-  need to be on the same port or even server as Django, but Django will not
-  serve the zipfile itself.  The reason for this is that I want to be able
-  to pass the zipfile URL to other apps for downloading, and for downloads
-  to be easily resumable in the event they're accidentally cancelled before
-  they're finished.  The text on the download page mentions that zipfiles
-  are kept for around 48 hours, but that cleanup is actually not a function
-  of Exordium itself.  Instead, I just have a cronjob set on the box like so::
+Step 1: Define your variables from "Variables" tab:
 
-    0 2 * * * /usr/bin/find /var/audio/exordiumzips -type f -name "*.zip" -mtime +2 -print -exec unzip -v {} \; -exec rm {} \;
 
-- Tags for information commonly associated with classical music are
-  supported, namely: Group/Ensemble, Conductor, and Composer.  *(For ID3
-  tags: TPE2, TPE3, and TCOM, respectively.  In Ogg Vorbis, the more
-  sensible ENSEMBLE, CONDUCTOR, and COMPOSER.)*  Albums will still be
-  defined by their main Artist/Album association, and Artist is
-  always a required field, whereas Group/Conductor/Composer are all
-  optional.  Internally, these are all stored as "artists," so when
-  browsing by artist, Exordium should do the right thing and show you
-  all albums containing an artist, whether they showed up as artist,
-  composer, conductor, or ensemble.
+- Select categorical variable(s) of interest(s) for descriptive statistics and comparison
+- Change the test value if necessary (to test whether the data is random around the mean, median, mode statistics or a user-specified value)
 
-- There are many live concert recordings in my personal library, which I've
-  uniformly tagged with an album name starting with "YYYY.MM.DD - Live".
-  Given the volume of these albums, Exordium will automatically consider any
-  album matching that name as a "live" album.  *(Dashes and underscores are
-  also acceptable inbetween the date components.)*  By default, Exordium
-  will hide those live albums from its display, since they otherwise often
-  get in the way.  A checkbox is available in the lefthand column to turn
-  on live album display, though, and it can be toggled at any time.
 
-- The "addition date" of albums into the library is an important data point;
-  Exordium's main view is the twenty most recently-added albums.  To that
-  point, updates of the music files will allow the album records to be
-  updated while keeping the addition time intact.  Some specific cases in
-  which this is ensured:
+----------------------------------
 
-  - Updating album/artist names in the file's tags
-  - Moving music files from one directory to another, or renaming the files
+.. figure:: images/help_img/nonparametricTests/randomnessTest/variables.png
+    :align: center
+    :height: 400
+    :width: 400
+    :alt: randomnessTestVariables
 
-  Combining the two may, however, result in the album being deleted from
-  the library and then re-added.  If the tags on a collection of files are
-  updated (so that the file's checksum changes), **and** the files are
-  moved into a separate directory, the album will end up being re-added,
-  since there's no reasonable way to associate the updated files with the
-  old ones.
+---------------------------------
 
-  The most common case of that would be if there was a typo in the album
-  or artist name for an album, and that typo was replicated in the directory
-  structure containing the files.  Fixing the typo would involve changing
-  both the tags and the directory names.  In order to keep the addition time
-  intact in this case, you would have to perform both steps separately, running
-  an update after each one.
 
-Limitations
------------
+.. note:: You may choose more options using following tabs:
 
-There are some inherent limitations of Exordium, based on the assumptions
-that have been made during its development (and in my own music library).
+"Statistics" tab
 
-- The artist name "Various" is reserved.  Tracks with an artist tag of
-  "Various" will not be added to the library.
 
-- Artist and Trackname tags are required.  Tracks will not be added to
-  the library if either of those tags are missing.
+- Choose one or more available randomness tests: Walf-Wolfovitz runs, Mann-Kendall rank or Bartel tests
+- Select the type of alternative hypothesis
+- Define the confidence level for hypothesis testing
 
-- If two Various Artists albums with the same album name exist in the
-  library, they'll end up stored as one single album in the DB.
+----------------------------------
 
-- If two directories contain files which seem to be in the same album (by
-  the same artist), you'll end up with an album which spans directories.
-  Behavior may not be well-defined in that case.
+.. figure:: images/help_img/nonparametricTests/randomnessTest/statistics.png
+    :align: center
+    :height: 750
+    :width: 750
+    :alt: randomnessTestStatistics
 
-- Exordium completely ignores genre tags.  I've personally always been
-  lousy at putting reasonable values in there on my media, and so that's
-  been very unimportant to me.  It'd probably be good to support them
-  anyway, though.
+---------------------------------
 
-- Exordium only supports mp3, ogg, and m4a currently, though other
-  support should be reasonably simple to add in, so long as Mutagen
-  supports the format.
+"Graphs" tab
 
-- m4a tags don't seem to allow for Ensemble or Conductor, so that data
-  will never be present for m4a files.  (If support for those tags is
-  in there somewhere, I'd like to hear about it.)
+
+- Select Randomness plot
+- Display the threshold line in the plot
+
+----------------------------------
+
+.. figure:: images/help_img/nonparametricTests/randomnessTest/graphs.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: randomnessTestGraphs
+
+---------------------------------
+
+"Options" tab
+
+
+- Choose p value computation option as asymptotic or exact
+
+
+----------------------------------
+
+.. figure:: images/help_img/nonparametricTests/randomnessTest/options.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: randomnessTestOptions
+
+---------------------------------
+
+
+Step 2: Get your desired outputs
+
+- Display table with the descriptive statistics of the selected variables
+- Switch between variables using combo-box button
+- Click ‘Show All’ to display results for all variables in same screen
+
+----------------------------------
+
+.. figure:: images/help_img/nonparametricTests/randomnessTest/tableResults.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: randomnessTestResults
+
+.. figure:: images/help_img/nonparametricTests/randomnessTest/tableResults2.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: randomnessTestResults
+
+---------------------------------
+
+
+- Display the Randomness Test results
+
+----------------------------------
+
+.. figure:: images/help_img/nonparametricTests/randomnessTest/testResults.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: randomnessTestTestResults
+
+---------------------------------
+
+- Display interactive plots:
+- Randomness Plot
+
+----------------------------------
+
+.. figure:: images/help_img/nonparametricTests/randomnessTest/graphResults.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: randomnessTestRandomnessPlot
+
+----------------------------------
+
+
+
+
+
+One Sample Test
+---------------
+
+How to select this module?
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Parametric Tests 
+
+.. figure:: images/help_img/step.png
+    :align: left
+    :height: 40
+    :width: 40
+
+One Sample Test
+
+General aim
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- This module can be used to estimate the median of the population and compare whether the data distribution differs from a specified reference value.
+
+What can you do using this module?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Compute several descriptive statistics to describe the distribution of categorical data and estimate the proportion of the population
+- Compare the data distribution with a specified reference value
+- Display the data distribution of variables with interactive boxplots
+- Test whether the data distributed normally or not using Shapiro-Wilk’s test
+
+
+Usage
+~~~~~~
+
+Step 1: Define your variables from "Variables" tab:
+
+
+- Select categorical variable(s) of interest(s) for descriptive statistics and comparison
+- Enter the test value (the median to be compared)
+
+
+----------------------------------
+
+.. figure:: images/help_img/nonparametricTests/oneSample/variables.png
+    :align: center
+    :height: 400
+    :width: 400
+    :alt: oneSampleVariables
+
+---------------------------------
+
+
+.. note:: You may choose more options using following tabs:
+
+"Statistics" tab
+
+
+- Choose one or more available comparison tests: Wilcoxon or sign tests
+- Check the box for Shapiro-Wilk’s normality test
+- Select the type of alternative hypothesis
+- Define the confidence level for hypothesis testing
+
+----------------------------------
+
+.. figure:: images/help_img/nonparametricTests/oneSample/statistics.png
+    :align: center
+    :height: 750
+    :width: 750
+    :alt: oneSampleStatistics
+
+---------------------------------
+
+"Graphs" tab
+
+
+- Select Box Plot
+- Identify what the error bars will represent: confidence intervals, standard errors or standard deviations
+
+----------------------------------
+
+.. figure:: images/help_img/nonparametricTests/oneSample/graphs.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: oneSampleGraphs
+
+---------------------------------
+
+"Options" tab
+
+
+- Choose p value computation option as asymptotic or exact
+
+
+----------------------------------
+
+.. figure:: images/help_img/nonparametricTests/oneSample/options.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: oneSampleOptions
+
+---------------------------------
+
+
+Step 2: Get your desired outputs
+
+- Display table with the descriptive statistics of the selected variables
+- Switch between variables using combo-box button
+- Click ‘Show All’ to display results for all variables in same screen
+
+----------------------------------
+
+.. figure:: images/help_img/nonparametricTests/oneSample/tableResults.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: oneSampleResults
+
+.. figure:: images/help_img/nonparametricTests/oneSample/tableResults2.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: oneSampleResults
+
+---------------------------------
+
+
+- Display the One Sample Test results
+
+----------------------------------
+
+.. figure:: images/help_img/nonparametricTests/oneSample/testResults.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: oneSampleTestResults
+
+.. figure:: images/help_img/nonparametricTests/oneSample/testResults2.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: oneSampleTestResults    
+
+---------------------------------
+
+
+- Display Shapiro-Wilk’s Normality Test result
+
+----------------------------------
+
+.. figure:: images/help_img/nonparametricTests/oneSample/testResults3.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: oneSampleTestResults
+
+---------------------------------
+
+
+- Display interactive plots:
+- Box Plot
+
+----------------------------------
+
+.. figure:: images/help_img/nonparametricTests/oneSample/graphResults.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: oneSampleBoxPlot
+
+----------------------------------
+
+
+
+
+Independent Two Samples Test
+----------------------------
+
+How to select this module?
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Parametric Tests 
+
+.. figure:: images/help_img/step.png
+    :align: left
+    :height: 40
+    :width: 40
+
+Independent Two Samples Test
+
+General aim
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- This module can be used to estimate the medians of two independent populations and to identify whether the differences of the distribution between two independent samples differs from 0 (or a test value).
+
+What can you do using this module?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Compute several descriptive statistics to describe the distribution of numerical data and estimate the medians of two independent populations
+- Identify whether the differences of the distribution between two independent samples differs from 0 (or a test value)
+- Display the data distribution of variables with interactive boxplots
+- Test whether the data distributed normally or not using Shapiro-Wilk’s test
+- Test whether the group variances are homogeneous to each other
+
+
+Usage
+~~~~~~
+
+Step 1: Define your variables from "Variables" tab:
+
+
+- Select categorical variable(s) of interest(s) for descriptive statistics and comparison
+- Select group variable(s) of interest(s) whose categories will be compared with each other
+- Change the test value if necessary (to test whether the differences of the distribution between two independent samples are equal to a specified test value)
+
+
+----------------------------------
+
+.. figure:: images/help_img/nonparametricTests/independentTwoSamples/variables.png
+    :align: center
+    :height: 400
+    :width: 400
+    :alt: independentTwoSamplesVariables
+
+---------------------------------
+
+
+.. note:: You may choose more options using following tabs:
+
+"Statistics" tab
+
+
+- Choose one or more available comparison tests: Mann-Whitney U or Kolmogorov-Smirnov Z tests
+- Check the box for Shapiro-Wilk’s normality test
+- Check the box for Levene variance homogeneity test with the location median or mean
+- Select the type of alternative hypothesis
+- Define the confidence level for hypothesis testing
+
+----------------------------------
+
+.. figure:: images/help_img/nonparametricTests/independentTwoSamples/statistics.png
+    :align: center
+    :height: 750
+    :width: 750
+    :alt: independentTwoSamplesStatistics
+
+---------------------------------
+
+"Graphs" tab
+
+
+- Select Box Plot
+- Identify what the error bars will represent: confidence intervals, standard errors or standard deviations
+
+----------------------------------
+
+.. figure:: images/help_img/nonparametricTests/independentTwoSamples/graphs.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: independentTwoSamplesGraphs
+
+---------------------------------
+
+"Options" tab
+
+
+- Identify the group variable categories that will be compared with each other
+- Manage missing values with either complete case or by variable deletion
+- Choose p value computation option as asymptotic or exact
+
+
+----------------------------------
+
+.. figure:: images/help_img/nonparametricTests/independentTwoSamples/options.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: independentTwoSamplesOptions
+
+---------------------------------
+
+
+Step 2: Get your desired outputs
+
+- Display table with the descriptive statistics of the selected variables
+- Switch between variables using combo-box button
+
+----------------------------------
+
+.. figure:: images/help_img/nonparametricTests/independentTwoSamples/tableResults.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: independentTwoSamplesResults
+
+.. figure:: images/help_img/nonparametricTests/independentTwoSamples/tableResults2.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: oneSampleResults
+
+---------------------------------
+
+
+- Display the Independent Two Samples Test results
+
+----------------------------------
+
+.. figure:: images/help_img/nonparametricTests/independentTwoSamples/testResults.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: independentTwoSamplesTestResults
+
+.. figure:: images/help_img/nonparametricTests/independentTwoSamples/testResults2.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: independentTwoSamplesTestResults    
+
+---------------------------------
+
+
+- Display Shapiro-Wilk’s Normality Test result
+
+----------------------------------
+
+.. figure:: images/help_img/nonparametricTests/independentTwoSamples/testResults3.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: independentTwoSamplesTestResults
+
+---------------------------------
+
+
+
+- Display Levene's test for homogeneity result
+
+----------------------------------
+
+.. figure:: images/help_img/nonparametricTests/independentTwoSamples/testResults4.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: independentTwoSamplesTestResults
+
+---------------------------------
+
+
+- Display interactive plots:
+- Box Plot
+
+----------------------------------
+
+.. figure:: images/help_img/nonparametricTests/independentTwoSamples/graphResults.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: independentTwoSamplesBoxPlot
+
+----------------------------------
+
+
+
+
+Dependent Two Samples Test
+----------------------------
+
+How to select this module?
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Parametric Tests 
+
+.. figure:: images/help_img/step.png
+    :align: left
+    :height: 40
+    :width: 40
+
+Dependent Two Samples Test
+
+General aim
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- This module can be used to estimate the medians of two dependent populations and to identify whether the differences of the distribution between two paired samples differs from 0 (or a test value).
+
+What can you do using this module?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Compute several descriptive statistics to describe the distribution of numerical data and estimate the medians of two independent populations
+- Compute several descriptive statistics for differences
+- Compare the estimated paired medians each other
+- Compute the correlation estimates between paired samples
+- Display the data distribution of variables with interactive boxplots
+- Test whether the data distributed normally or not using Shapiro-Wilk’s test
+
+
+Usage
+~~~~~~
+
+Step 1: Define your variables from "Variables" tab:
+
+
+- Select the first numerical variable(s) of interest(s) from ‘Variable One’
+- Select the second numerical variable(s) of interest(s) from ‘Variable Two’
+- Change the test value if necessary (to test whether the differences of the distribution between two independent samples are equal to a specified test value)
+
+
+----------------------------------
+
+.. figure:: images/help_img/nonparametricTests/dependentTwoSamples/variables.png
+    :align: center
+    :height: 400
+    :width: 400
+    :alt: dependentTwoSamplesVariables
+
+---------------------------------
+
+
+.. note:: You may choose more options using following tabs:
+
+"Statistics" tab
+
+
+- Choose one or more available comparison tests: Wilcoxon and Sign tests
+- Check the box for Shapiro-Wilk’s normality test
+- Select the type of alternative hypothesis
+- Define the confidence level for hypothesis testing
+
+----------------------------------
+
+.. figure:: images/help_img/nonparametricTests/dependentTwoSamples/statistics.png
+    :align: center
+    :height: 750
+    :width: 750
+    :alt: dependentTwoSamplesStatistics
+
+---------------------------------
+
+"Graphs" tab
+
+
+- Select Box Plot
+
+----------------------------------
+
+.. figure:: images/help_img/nonparametricTests/dependentTwoSamples/graphs.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: dependentTwoSamplesGraphs
+
+---------------------------------
+
+Step 2: Get your desired outputs
+
+- Display table with the descriptive statistics of the selected variables
+- Switch between variables using combo-box button
+- Check the box for paired correlations
+- Check the box for descriptive statistics for differences (%)
+
+----------------------------------
+
+.. figure:: images/help_img/nonparametricTests/dependentTwoSamples/tableResults.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: dependentTwoSamplesResults
+
+.. figure:: images/help_img/nonparametricTests/dependentTwoSamples/tableResults2.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: dependentTwoSamplesResults
+
+---------------------------------
+
+
+- Display the Dependent Two Samples Test results
+
+----------------------------------
+
+.. figure:: images/help_img/nonparametricTests/dependentTwoSamples/testResults.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: dependentTwoSamplesTestResults
+
+.. figure:: images/help_img/nonparametricTests/dependentTwoSamples/testResults2.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: dependentTwoSamplesTestResults    
+
+---------------------------------
+
+
+- Display the correlation estimates between paired samples
+
+----------------------------------
+
+.. figure:: images/help_img/nonparametricTests/dependentTwoSamples/testResults4.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: dependentTwoSamplesTestResults
+
+
+.. figure:: images/help_img/nonparametricTests/dependentTwoSamples/testResults5.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: dependentTwoSamplesTestResults    
+
+---------------------------------
+
+- Display Shapiro-Wilk’s Normality Test result
+
+----------------------------------
+
+.. figure:: images/help_img/nonparametricTests/dependentTwoSamples/testResults3.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: dependentTwoSamplesTestResults
+
+
+---------------------------------
+
+
+- Display interactive plots:
+- Box Plot
+
+----------------------------------
+
+.. figure:: images/help_img/nonparametricTests/dependentTwoSamples/graphResults.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: dependentTwoSamplesBoxPlot
+
+----------------------------------
+
+
+
+
+Independent k Samples Test
+----------------------------
+
+How to select this module?
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Parametric Tests 
+
+.. figure:: images/help_img/step.png
+    :align: left
+    :height: 40
+    :width: 40
+
+Independent k Samples Test
+
+General aim
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- This module can be used to estimate the medians and compare the distributions of two or more independent populations.
+
+What can you do using this module?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Compute several descriptive statistics to describe the distribution of numerical data and estimate the medians of two independent populations
+- Compare the differences of the distribution among more than two independent samples
+- Apply pairwise comparisons with one or more available post-hoc tests
+- Display the data distribution of variables with interactive boxplots
+- Test whether the data distributed normally or not using Shapiro-Wilk’s test
+- Test whether the group variances are homogeneous to each other
+
+
+Usage
+~~~~~~
+
+Step 1: Define your variables from "Variables" tab:
+
+
+- Select response numerical variable(s) of interest(s) that will be used for comparison
+- Select group variable(s) of interest(s) whose categories will be compared with each other
+
+
+----------------------------------
+
+.. figure:: images/help_img/nonparametricTests/kIndependentSamples/variables.png
+    :align: center
+    :height: 400
+    :width: 400
+    :alt: kIndependentSamplesVariables
+
+---------------------------------
+
+
+.. note:: You may choose more options using following tabs:
+
+"Statistics" tab
+
+
+- Choose one or more available comparison tests: Kruskal-Wallis, Median and Van der Waerden scores tests
+- Choose one or more available post-hoc tests: Siegel Castellan and Dunn’s
+- Select the type of alternative hypothesis
+- Define the confidence level for hypothesis testing
+- Check the box for Shapiro-Wilk’s normality test
+- Check the box for Levene variance homogeneity test with the location median or mean
+
+----------------------------------
+
+.. figure:: images/help_img/nonparametricTests/kIndependentSamples/statistics.png
+    :align: center
+    :height: 750
+    :width: 750
+    :alt: kIndependentSamplesStatistics
+
+---------------------------------
+
+"Graphs" tab
+
+
+- Select Box Plot
+
+----------------------------------
+
+.. figure:: images/help_img/nonparametricTests/kIndependentSamples/graphs.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: kIndependentSamplesGraphs
+
+---------------------------------
+
+"Options" tab
+
+
+- SChoose p value computation option as asymptotic or exact
+- Manage missing values with either complete case or by variable deletion
+
+----------------------------------
+
+.. figure:: images/help_img/nonparametricTests/kIndependentSamples/options.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: kIndependentSamplesOptions
+
+---------------------------------
+
+
+Step 2: Get your desired outputs
+
+- Display table with the descriptive statistics of the selected variables
+- Switch between variables using combo-box button
+
+----------------------------------
+
+.. figure:: images/help_img/nonparametricTests/kIndependentSamples/tableResults.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: kIndependentSamplesResults
+
+.. figure:: images/help_img/nonparametricTests/kIndependentSamples/tableResults2.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: kIndependentSamplesResults
+
+---------------------------------
+
+
+- Display the Independent k Samples results
+
+----------------------------------
+
+.. figure:: images/help_img/nonparametricTests/kIndependentSamples/testResults.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: kIndependentSamplesTestResults
+
+---------------------------------
+
+
+- Display Shapiro-Wilk’s Normality Test result
+
+----------------------------------
+
+.. figure:: images/help_img/nonparametricTests/kIndependentSamples/testResults2.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: kIndependentSamplesTestResults
+
+---------------------------------
+
+- Display Levene variance homogeneity test result
+
+----------------------------------
+
+.. figure:: images/help_img/nonparametricTests/kIndependentSamples/testResults3.jpg
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: kIndependentSamplesTestResults
+
+
+---------------------------------
+
+
+- Display interactive plots:
+- Box Plot
+
+----------------------------------
+
+.. figure:: images/help_img/nonparametricTests/kIndependentSamples/graphResults.png
+    :align: center
+    :height: 650
+    :width: 650
+    :alt: kIndependentSamplesBoxPlot
+
+----------------------------------
+
+
